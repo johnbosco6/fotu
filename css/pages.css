@@ -149,3 +149,127 @@
   max-height: 60vh;
   overflow-y: auto;
 }
+
+/* Consulting Page Custom Styles */
+.consulting-hero {
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-white);
+  padding: var(--space-16) 0 var(--space-20);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid var(--color-primary);
+}
+
+.consulting-hero::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  animation: bgShift 20s infinite alternate ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes bgShift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(8%, 8%) scale(1.1); }
+}
+
+.consulting-hero .page-title {
+  color: var(--color-white);
+  margin-bottom: var(--space-3);
+  position: relative;
+  z-index: 2;
+  font-size: var(--text-3xl);
+}
+
+@media (min-width: 768px) {
+  .consulting-hero .page-title {
+    font-size: var(--text-4xl);
+  }
+}
+
+.consulting-hero .page-subtitle {
+  color: rgba(255, 255, 255, 0.95);
+  position: relative;
+  z-index: 2;
+  font-size: var(--text-lg);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.activity-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-8);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.activity-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-primary-light);
+}
+
+.activity-icon-container {
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+  background: var(--color-bg-alt);
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.engagement-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.engagement-item {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.engagement-item:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 768px) {
+  .engagement-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.engagement-org {
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.engagement-role {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.engagement-year {
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: var(--text-sm);
+}

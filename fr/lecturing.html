@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecturing & Consulting | Dr. Fatoumata Sylla</title>
+  <title>Enseignement & Conseil | Dr Fatoumata Sylla</title>
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/layout.css">
@@ -15,36 +15,165 @@
   <!-- Navigation -->
   <header class="site-header" id="header">
     <div class="container nav-container">
-      <a href="../index.html" class="site-title">Dr. Fatoumata Sylla</a>
+      <a href="../index.html" class="site-title">Dr Fatoumata Sylla</a>
       <nav class="main-nav" id="main-nav">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../about.html" class="nav-link">About</a>
-        <a href="research.html" class="nav-link">Research</a>
+        <a href="../index.html" class="nav-link">Accueil</a>
+        <a href="about.html" class="nav-link">À propos</a>
+        <a href="research.html" class="nav-link">Recherche</a>
         <a href="publications.html" class="nav-link">Publications</a>
         <a href="lecturing.html" class="nav-link active">Consulting</a>
-        <a href="blog.html" class="nav-link">News</a>
+        <a href="blog.html" class="nav-link">Actualités</a>
         <a href="contact.html" class="nav-link">Contact</a>
-        <button class="lang-toggle active">EN</button>
+        <button class="lang-toggle" onclick="window.location.href='../lecturing.html'">EN</button>
         <span class="lang-separator">|</span>
-        <button class="lang-toggle" onclick="window.location.href='fr/lecturing.html'">FR</button>
+        <button class="lang-toggle active" onclick="window.location.href='lecturing.html'">FR</button>
       </nav>
       <button class="mobile-nav-toggle" id="mobile-toggle">☰</button>
     </div>
   </header>
 
-  <div class="page-header">
+  <!-- Hero Section with Classic Gradient -->
+  <div class="consulting-hero">
     <div class="container reveal reveal-up">
-      <h1 class="page-title">Lecturing & Consulting</h1>
-      <p class="page-subtitle">Expertise shared with academia, policymakers, and NGOs.</p>
+      <h1 class="page-title">Enseignement & Conseil</h1>
+      <p class="page-subtitle">Interventions académiques, conseil politique, consultation de recherche et programmes de formation sensibilisés aux traumatismes.</p>
     </div>
   </div>
 
-  <section class="section pt-0">
-    <div class="container text-center reveal reveal-up">
-      <p style="max-width: 800px; margin: 0 auto 2rem;">
-        Dr. Sylla provides expert consulting services to healthcare organizations, NGOs, and governmental bodies regarding women's health policy. She is also a frequent guest lecturer at academic institutions.
-      </p>
-      <a href="contact.html" class="btn btn-primary">Request Booking</a>
+  <section class="section">
+    <div class="container">
+      
+      <!-- Intro -->
+      <div class="text-center mb-16 reveal reveal-up">
+        <p style="max-width: 800px; margin: 0 auto; font-size: var(--text-lg); line-height: 1.8;" class="text-muted">
+          La Dr Sylla traduit la recherche académique en politiques et pratiques concrètes. Elle collabore avec les universités, les instances gouvernementales, les agences de santé internationales et les ONG locales pour faire progresser la santé des femmes dans le monde.
+        </p>
+      </div>
+
+      <!-- Detail of Activities -->
+      <h2 class="text-center mb-12 reveal reveal-up">Activités de Conseil</h2>
+      <div class="grid grid-2 gap-8 mb-20">
+        
+        <!-- Academic Lecturing -->
+        <div class="activity-card reveal reveal-up stagger-1">
+          <div class="activity-icon-container">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <h3 class="mb-2">Enseignement Académique</h3>
+          <p class="text-muted">Cours magistraux, séminaires universitaires et modules cliniques spécialisés sur la santé reproductive mondiale, l'épidémiologie maternelle et les méthodes de recherche quantitative.</p>
+        </div>
+        
+        <!-- Research Consultation -->
+        <div class="activity-card reveal reveal-up stagger-2">
+          <div class="activity-icon-container">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+          </div>
+          <h3 class="mb-2">Consultation en Recherche</h3>
+          <p class="text-muted">Conseil sur la conception d'études cliniques, la formulation d'enquêtes épidémiologiques et l'analyse statistique des données pour les essais de santé des femmes.</p>
+        </div>
+        
+        <!-- Policy Advisory -->
+        <div class="activity-card reveal reveal-up stagger-3">
+          <div class="activity-icon-container">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
+          <h3 class="mb-2">Conseil Politique</h3>
+          <p class="text-muted">Conseil auprès des ministères de la santé locaux, des ONG et des organismes mondiaux tels que l'OMS sur les stratégies de prévention des MGF fondées sur des données probantes.</p>
+        </div>
+        
+        <!-- Training Programs -->
+        <div class="activity-card reveal reveal-up stagger-4">
+          <div class="activity-icon-container">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="mb-2">Programmes de Formation</h3>
+          <p class="text-muted">Ateliers de formation pratiques sensibilisés aux traumatismes pour le personnel clinique, les sages-femmes et les défenseurs communautaires travaillant avec les survivantes de MGF.</p>
+        </div>
+        
+      </div>
+
+      <div class="grid grid-2 gap-12 mt-8">
+        
+        <!-- Previous Engagements -->
+        <div class="reveal reveal-left">
+          <h2 class="mb-6">Engagements Précédents</h2>
+          <div class="card p-6" style="padding: var(--space-8);">
+            <ul class="engagement-list">
+              <li class="engagement-item">
+                <div>
+                  <div class="engagement-org">Sorbonne Université</div>
+                  <div class="engagement-role">Intervenante invitée, Master en Santé Publique</div>
+                </div>
+                <div class="engagement-year">2021 - 2025</div>
+              </li>
+              <li class="engagement-item">
+                <div>
+                  <div class="engagement-org">Organisation Mondiale de la Santé (OMS)</div>
+                  <div class="engagement-role">Contributrice experte, Comité des directives de prévention des MGF</div>
+                </div>
+                <div class="engagement-year">2023</div>
+              </li>
+              <li class="engagement-item">
+                <div>
+                  <div class="engagement-org">Ministère de la Santé</div>
+                  <div class="engagement-role">Conseillère technique sur l'accès aux soins reproductifs</div>
+                </div>
+                <div class="engagement-year">2024</div>
+              </li>
+              <li class="engagement-item">
+                <div>
+                  <div class="engagement-org">Groupe de Formation Clinique Inserm</div>
+                  <div class="engagement-role">Directrice d'atelier, Méthodes de soins de santé adaptées aux traumatismes</div>
+                </div>
+                <div class="engagement-year">2022</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Booking & Social Connect -->
+        <div class="reveal reveal-right">
+          <h2 class="mb-6">Demande de Collaboration</h2>
+          <div class="card p-8 text-center" style="padding: var(--space-10); display: flex; flex-direction: column; justify-content: center; height: 100%;">
+            <h3 class="mb-4">Contactez-moi</h3>
+            <p class="mb-6 text-muted">Pour toute demande concernant les cours invités, les rôles de conseil, la coordination d'ateliers ou la disponibilité pour des consultations, veuillez me contacter directement.</p>
+            <a href="contact.html" class="btn btn-primary mb-8" style="align-self: center;">Demander une réservation</a>
+            
+            <h4 class="mb-4" style="font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted);">Rejoindre sur les réseaux sociaux</h4>
+            <div style="display: flex; gap: var(--space-4); justify-content: center;">
+              <a href="https://www.linkedin.com/in/fsylla" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+              <a href="https://orcid.org/0000-0001-5656-6167" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" aria-label="ORCID">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 8h2a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H9"></path><path d="M9 12h2a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H9"></path><line x1="9" y1="8" x2="9" y2="16"></line></svg>
+              </a>
+              <a href="https://scholar.google.com/citations?hl=en&user=OnSwY4YAAAAJ" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" aria-label="Google Scholar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+              </a>
+              <a href="https://www.instagram.com/llafatou" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon" aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
     </div>
   </section>
 
@@ -142,6 +271,3 @@
   <script src="../js/animations.js"></script>
 </body>
 </html>
-
-
-
