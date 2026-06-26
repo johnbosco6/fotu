@@ -1,10 +1,10 @@
 /* variables.css - Design System Tokens */
 :root {
   /* Colors */
-  --color-primary: #954535; /* Chestnut */
-  --color-primary-light: #B45B4B;
-  --color-primary-dark: #7A3528;
-  --color-secondary: #AD6F69; /* Copper Penny */
+  --color-primary: #A2653E;
+  --color-primary-light: #BF7E54;
+  --color-primary-dark: #85502E;
+  --color-secondary: #C49273;
   
   --color-text-main: #000000;
   --color-text-muted: #555555;

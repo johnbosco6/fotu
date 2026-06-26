@@ -33,11 +33,11 @@
 }
 
 .profile-img-container {
-  width: 130px;
-  height: 130px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-  padding: 3px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  padding: 4px;
   margin-bottom: var(--space-4);
   background-color: var(--color-white);
   box-shadow: var(--shadow-lg);
@@ -80,10 +80,10 @@
   }
 
   .profile-img-container {
-    width: 200px;
-    height: 200px;
-    border: 4px solid rgba(255, 255, 255, 0.2);
-    padding: 4px;
+    width: 220px;
+    height: 220px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    padding: 5px;
     margin-bottom: var(--space-6);
   }
 
@@ -104,8 +104,8 @@
   }
 
   .profile-img-container {
-    width: 220px;
-    height: 220px;
+    width: 260px;
+    height: 260px;
   }
 
   .hero-title {
