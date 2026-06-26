@@ -6,6 +6,7 @@ export default defineConfig({
   title: 'Dr. Fatoumata Sylla CMS',
   projectId: '1zncxuxn',
   dataset: 'production',
+  basePath: '/studio',
   plugins: [
     deskTool({
       structure: (S) =>
