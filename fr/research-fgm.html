@@ -17,16 +17,19 @@
   <header class="site-header" id="header">
     <div class="container nav-container">
       <a href="../index.html" class="site-title">Dr. Fatoumata Sylla</a>
-      <nav class="main-nav" id="main-nav">
+            <nav class="main-nav" id="main-nav">
         <button class="nav-close-btn" id="nav-close" aria-label="Close Navigation">&times;</button>
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../about.html" class="nav-link">About</a>
-        <a href="research.html" class="nav-link active">Research</a>
+        <a href="index.html" class="nav-link">Accueil</a>
+        <a href="about.html" class="nav-link">À propos</a>
+        <a href="research.html" class="nav-link active">Recherche</a>
         <a href="publications.html" class="nav-link">Publications</a>
+        <a href="lecturing.html" class="nav-link">Consulting</a>
+        <a href="blog.html" class="nav-link">Actualités</a>
         <a href="contact.html" class="nav-link">Contact</a>
-        <button class="lang-toggle active">EN</button>
+        
+        <button class="lang-toggle" onclick="window.location.href='../research-fgm.html'">EN</button>
         <span class="lang-separator">|</span>
-        <button class="lang-toggle" onclick="window.location.href='fr/research-fgm.html'">FR</button>
+        <button class="lang-toggle active" onclick="window.location.href='research-fgm.html'">FR</button>
       </nav>
       <button class="mobile-nav-toggle" id="mobile-toggle">☰</button>
     </div>
@@ -64,30 +67,30 @@
     </div>
   </section>
 
-  <!-- Affiliations Section -->
-  <section class="section text-center" style="padding: var(--space-8) 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); background-color: var(--color-bg-alt);">
-    <div class="container">
-      <h3 style="font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-muted); margin-bottom: var(--space-6); font-weight: 600;">Affiliations Institutionnelles</h3>
-      <div style="display: flex; gap: var(--space-8); justify-content: center; align-items: center; flex-wrap: wrap;">
+  
+
+          <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-affiliations border-bottom" style="padding-bottom: var(--space-6); margin-bottom: var(--space-8); border-bottom: 1px solid var(--color-border); text-align: center;">
+      <h4 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-muted); margin-bottom: var(--space-4); font-weight: 600;">Affiliations Institutionnelles</h4>
+      <div class="affiliations-container" style="display: flex; gap: var(--space-8); justify-content: center; align-items: center; flex-wrap: wrap;">
+        <!-- Affiliations loaded dynamically from Sanity -->
         <a href="https://www.inserm.fr/" target="_blank" rel="noopener noreferrer" class="hover-lift" style="display: inline-block;">
-          <img src="../assets/logos/inserm.png" alt="Inserm" style="height: 60px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+          <img src="../assets/logos/inserm.png" alt="Inserm" style="height: 85px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
         </a>
         <a href="https://cesp.inserm.fr/" target="_blank" rel="noopener noreferrer" class="hover-lift" style="display: inline-block;">
-          <img src="../assets/logos/cesp.jpg" alt="CESP" style="height: 60px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+          <img src="../assets/logos/cesp.jpg" alt="CESP" style="height: 85px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
         </a>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
     <div class="container mb-12 border-bottom pb-12" style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-8); margin-bottom: var(--space-8);">
       <h3 class="footer-title text-center">Restez Informé(e)</h3>
       <p class="text-center text-muted mb-6">Abonnez-vous à ma newsletter pour recevoir des mises à jour sur mes nouvelles publications et événements.</p>
       <form class="newsletter-form" id="newsletter-form" style="max-width: 800px; margin: 0 auto;">
-        <input type="text" class="form-control" placeholder="Prénom" required>
-        <input type="text" class="form-control" placeholder="Nom" required>
-        <input type="email" class="form-control" placeholder="Adresse e-mail" required>
+        <input type="text" class="form-control" name="firstName" placeholder="Prénom" required>
+        <input type="text" class="form-control" name="lastName" placeholder="Nom" required>
+        <input type="email" class="form-control" name="email" placeholder="Adresse e-mail" required>
         <button type="submit" class="btn btn-primary">S'inscrire</button>
       </form>
     </div>
@@ -149,8 +152,6 @@
     
     <div class="container footer-bottom">
       <p>&copy; 2026 Dr Fatoumata Sylla. Tous droits réservés.</p>
-      <!-- Google Translate Widget Placeholder -->
-      <div id="google_translate_element"></div>
     </div>
   </footer>
 

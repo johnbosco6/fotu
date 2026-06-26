@@ -63,7 +63,10 @@ export default defineConfig({
             S.documentTypeListItem('researchArea').title('Research Areas'),
             S.documentTypeListItem('publication').title('Publications'),
             S.documentTypeListItem('blogPost').title('Blog / News Posts'),
-            S.documentTypeListItem('event').title('Events / Lectures')
+            S.documentTypeListItem('event').title('Events / Lectures'),
+            S.divider(),
+            S.documentTypeListItem('contactSubmission').title('Contact Submissions'),
+            S.documentTypeListItem('newsletterSubmission').title('Newsletter Signups')
           ])
     })
   ],

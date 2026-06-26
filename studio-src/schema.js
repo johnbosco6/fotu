@@ -8,6 +8,8 @@ import event from './schemas/event.js';
 import consulting from './schemas/consulting.js';
 import press from './schemas/press.js';
 import settings from './schemas/settings.js';
+import contactSubmission from './schemas/contactSubmission.js';
+import newsletterSubmission from './schemas/newsletterSubmission.js';
 
 export const schemaTypes = [
   localizedString,
@@ -21,5 +23,7 @@ export const schemaTypes = [
   event,
   consulting,
   press,
-  settings
+  settings,
+  contactSubmission,
+  newsletterSubmission
 ];

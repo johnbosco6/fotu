@@ -72,18 +72,4 @@ document.addEventListener('DOMContentLoaded', () => {
       searchModal.classList.remove('active');
     }
   });
-
-  // Google Translate Init
-  window.googleTranslateElementInit = function() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'en',
-      includedLanguages: 'es,de,it,pt,ar,zh-CN,ru', // Add as needed
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-  };
-
-  // Add Google Translate Script
-  const gtScript = document.createElement('script');
-  gtScript.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-  document.body.appendChild(gtScript);
 });

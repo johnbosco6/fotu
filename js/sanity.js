@@ -73,11 +73,11 @@ async function loadGlobalSettings() {
   const settings = await fetchFromSanity(query);
   if (!settings) return;
 
-  // Social Links
-  const linkedinElems = document.querySelectorAll('a[href*="linkedin.com"]');
-  const orcidElems = document.querySelectorAll('a[href*="orcid.org"]');
-  const scholarElems = document.querySelectorAll('a[href*="scholar.google"]');
-  const instagramElems = document.querySelectorAll('a[href*="instagram.com"]');
+  // Social Links (using robust selectors matching both URL substring and aria-labels)
+  const linkedinElems = document.querySelectorAll('a[href*="linkedin.com"], a[aria-label="LinkedIn"], a[aria-label="Linkedin"]');
+  const orcidElems = document.querySelectorAll('a[href*="orcid.org"], a[aria-label="ORCID"], a[aria-label="ORCiD"]');
+  const scholarElems = document.querySelectorAll('a[href*="scholar.google"], a[aria-label="Google Scholar"]');
+  const instagramElems = document.querySelectorAll('a[href*="instagram.com"], a[aria-label="Instagram"]');
 
   if (settings.linkedin) linkedinElems.forEach(el => el.href = settings.linkedin);
   if (settings.orcid) orcidElems.forEach(el => el.href = settings.orcid);
@@ -93,16 +93,16 @@ async function loadGlobalSettings() {
     }
   }
 
-  // Affiliations
+  // Affiliations inside Footer (with enlarged size)
   if (settings.affiliations && settings.affiliations.length > 0) {
-    const container = document.querySelector('.section.text-center div[style*="justify-content: center"]');
-    if (container) {
+    const containers = document.querySelectorAll('.affiliations-container');
+    containers.forEach(container => {
       container.innerHTML = settings.affiliations.map(aff => `
         <a href="${aff.link || '#'}" target="_blank" rel="noopener noreferrer" class="hover-lift" style="display: inline-block;">
-          <img src="${urlFor(aff.logo)}" alt="${aff.name || 'Affiliation'}" style="height: 60px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+          <img src="${urlFor(aff.logo)}" alt="${aff.name || 'Affiliation'}" style="height: 85px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
         </a>
       `).join('');
-    }
+    });
   }
 }
 
@@ -123,6 +123,53 @@ async function loadHomepage() {
   if (heroImage && data.profileImage) heroImage.src = urlFor(data.profileImage);
   if (introTitle && data.introTitle?.[lang]) introTitle.textContent = data.introTitle[lang];
   if (introDesc && data.introDescription?.[lang]) introDesc.textContent = data.introDescription[lang];
+
+  // Load latest publications on homepage
+  const homePubList = document.getElementById('home-publications-list');
+  if (homePubList) {
+    const pubQuery = `*[_type == "publication"] | order(year desc)[0...3]`;
+    const pubs = await fetchFromSanity(pubQuery);
+    if (pubs && pubs.length > 0) {
+      homePubList.innerHTML = pubs.map(pub => `
+        <li class="publication-item">
+          <div class="pub-title">${pub.title?.[lang] || ''}</div>
+          <div class="pub-authors">${pub.authors || ''}</div>
+          <div class="pub-journal">${pub.journal || ''}, ${pub.year || ''}</div>
+          <div class="pub-links">
+            ${pub.pdfFile ? `<a href="${fileUrlFor(pub.pdfFile)}" target="_blank">${isFrench ? 'Télécharger PDF' : 'Read PDF'}</a>` : ''}
+            ${pub.pdfFile && pub.doi ? ' | ' : ''}
+            ${pub.doi ? `<a href="${pub.doi}" target="_blank">DOI Link</a>` : ''}
+          </div>
+        </li>
+      `).join('');
+    }
+  }
+
+  // Load upcoming events on homepage
+  const homeEventsList = document.getElementById('home-events-list');
+  if (homeEventsList) {
+    const eventQuery = `*[_type == "event" && date >= now()] | order(date asc)[0...3]`;
+    const events = await fetchFromSanity(eventQuery);
+    if (events && events.length > 0) {
+      homeEventsList.innerHTML = events.map(evt => {
+        const eventDate = new Date(evt.date);
+        const day = eventDate.getDate().toString().padStart(2, '0');
+        const month = eventDate.toLocaleString('default', { month: 'short' });
+        return `
+          <div class="card mb-4" style="flex-direction: row; align-items: center; padding: 1rem;">
+            <div style="flex-shrink: 0; background: var(--color-bg-alt); padding: 1rem; border-radius: 8px; text-align: center; margin-right: 1rem;">
+              <span style="display: block; font-weight: 700; color: var(--color-primary); font-size: 1.5rem;">${day}</span>
+              <span style="display: block; text-transform: uppercase; font-size: 0.8rem;">${month}</span>
+            </div>
+            <div>
+              <h4 style="margin: 0;">${evt.name?.[lang] || ''}</h4>
+              <p style="margin: 0; color: var(--color-text-muted); font-size: 0.9rem;">${evt.location?.[lang] || ''}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
 }
 
 // About Page specific data loader
@@ -131,39 +178,35 @@ async function loadAboutPage() {
   const data = await fetchFromSanity(query);
   if (!data) return;
 
-  const bioTitle = document.querySelector('.reveal h2');
-  const bioContent = document.querySelector('.reveal h2 + p');
-  const cvLink = document.querySelector('a[href*="CV_Dr_Sylla"]');
+  // Biography content (new layout uses #about-bio-content)
+  const bioContainer = document.getElementById('about-bio-content');
   const profileImage = document.querySelector('.about-image');
-  const factsList = document.querySelector('.card ul');
+  const cvLink = document.getElementById('cv-download-link');
 
-  if (bioTitle && data.bioTitle?.[lang]) bioTitle.textContent = data.bioTitle[lang];
-  if (bioContent && data.bioContent?.[lang]) {
-    // Biography can contain multiple paragraphs, so we find its parent container to inject
-    const bioContainer = bioContent.parentElement;
-    if (bioContainer) {
-      // Keep biography title and replace the description paragraph(s) plus CV button
-      const titleHTML = `<h2>${data.bioTitle?.[lang] || 'Biography'}</h2>`;
-      const blocksHTML = portableTextToHTML(data.bioContent[lang]);
-      const cvBtnHTML = cvLink ? cvLink.outerHTML : '';
-      bioContainer.innerHTML = titleHTML + blocksHTML + cvBtnHTML;
-    }
+  if (bioContainer && data.bioContent?.[lang]) {
+    const titleHTML = `<h2>${data.bioTitle?.[lang] || (isFrench ? 'Biographie professionnelle' : 'Professional Biography')}</h2>`;
+    const blocksHTML = portableTextToHTML(data.bioContent[lang]);
+    bioContainer.innerHTML = titleHTML + blocksHTML;
+  } else if (bioContainer && data.bioTitle?.[lang]) {
+    const h2 = bioContainer.querySelector('h2');
+    if (h2) h2.textContent = data.bioTitle[lang];
   }
-  
+
   if (profileImage && data.profileImage) profileImage.src = urlFor(data.profileImage);
 
+  // CV File download
   if (cvLink && data.cvFile) {
-    const updatedCvLink = document.querySelector('a[href*="CV_Dr_Sylla"], a[download]');
-    if (updatedCvLink) updatedCvLink.href = fileUrlFor(data.cvFile);
+    cvLink.href = fileUrlFor(data.cvFile);
   }
 
-  // Quick Facts
-  if (factsList && data.quickFacts) {
-    factsList.innerHTML = `
-      <li><strong>${isFrench ? 'Poste' : 'Position'}:</strong> ${data.quickFacts.position?.[lang] || ''}</li>
-      <li><strong>${isFrench ? 'Spécialisation' : 'Specialization'}:</strong> ${data.quickFacts.specialization?.[lang] || ''}</li>
-      <li><strong>${isFrench ? 'Langues' : 'Languages'}:</strong> ${data.quickFacts.languages?.[lang] || ''}</li>
-    `;
+  // Quick Facts (new layout uses individual #fact-* IDs)
+  if (data.quickFacts) {
+    const posEl = document.getElementById('fact-position');
+    const specEl = document.getElementById('fact-specialization');
+    const langEl = document.getElementById('fact-languages');
+    if (posEl && data.quickFacts.position?.[lang]) posEl.textContent = data.quickFacts.position[lang];
+    if (specEl && data.quickFacts.specialization?.[lang]) specEl.textContent = data.quickFacts.specialization[lang];
+    if (langEl && data.quickFacts.languages?.[lang]) langEl.textContent = data.quickFacts.languages[lang];
   }
 
   // Timeline
@@ -184,38 +227,38 @@ async function loadAboutPage() {
 
 // Research Page & Subpages loader
 async function loadResearchPages() {
-  // Let's identify the current research area page based on URL
   const isFgmPage = window.location.pathname.includes('research-fgm');
   const isFibroidsPage = window.location.pathname.includes('research-fibroids');
-  const isOverviewPage = window.location.pathname.includes('research.html');
 
-  if (isOverviewPage) {
-    // Load summary research area cards from Sanity
+  // Check if cards linking to research subpages are present in the DOM (e.g. homepage or research overview page)
+  const cardLinks = document.querySelectorAll('a[href*="research-fgm"], a[href*="research-fibroids"]');
+  if (cardLinks.length > 0) {
     const query = `*[_type == "researchArea"]`;
     const areas = await fetchFromSanity(query);
-    if (!areas || areas.length === 0) return;
+    if (areas && areas.length > 0) {
+      areas.forEach(area => {
+        const areaSlug = area.slug?.current || '';
+        // Find all links referencing this area's slug
+        const matches = document.querySelectorAll(`a[href*="${areaSlug}"]`);
+        matches.forEach(cardLink => {
+          const card = cardLink.closest('.card');
+          if (card) {
+            const title = card.querySelector('.card-title');
+            const desc = card.querySelector('.card-text');
+            const badge = card.querySelector('.badge');
+            const img = card.querySelector('.card-image');
 
-    // Dynamically update the cards if they exist
-    areas.forEach(area => {
-      const areaSlug = area.slug?.current || '';
-      // Find cards by looking at hrefs containing the slug
-      const cardLink = document.querySelector(`a[href*="${areaSlug}"]`);
-      if (cardLink) {
-        const card = cardLink.closest('.card');
-        if (card) {
-          const title = card.querySelector('.card-title');
-          const desc = card.querySelector('.card-text');
-          const badge = card.querySelector('.badge');
-          const img = card.querySelector('.card-image');
+            if (title && area.title?.[lang]) title.textContent = area.title[lang];
+            if (badge && area.badge?.[lang]) badge.textContent = area.badge[lang];
+            if (desc && area.shortDescription?.[lang]) desc.textContent = area.shortDescription[lang];
+            if (img && area.bannerImage) img.src = urlFor(area.bannerImage);
+          }
+        });
+      });
+    }
+  }
 
-          if (title && area.title?.[lang]) title.textContent = area.title[lang];
-          if (badge && area.badge?.[lang]) badge.textContent = area.badge[lang];
-          if (img && area.bannerImage) img.src = urlFor(area.bannerImage);
-          // For overview descriptions, we fetch block overview text or just use placeholder
-        }
-      }
-    });
-  } else if (isFgmPage || isFibroidsPage) {
+  if (isFgmPage || isFibroidsPage) {
     const slug = isFgmPage ? 'fgm' : 'fibroids';
     const query = `*[_type == "researchArea" && slug.current match "*${slug}*"][0]`;
     const data = await fetchFromSanity(query);
@@ -303,9 +346,15 @@ async function loadPublicationsPage() {
 
   const query = `*[_type == "publication"] | order(year desc)`;
   const publications = await fetchFromSanity(query);
-  if (!publications || publications.length === 0) return;
+  
+  const container = document.getElementById('publications-list') || document.querySelector('.publication-list');
+  const emptyMsg = document.getElementById('publications-empty');
+  
+  if (!publications || publications.length === 0) {
+    if (emptyMsg) emptyMsg.style.display = 'block';
+    return;
+  }
 
-  const container = document.querySelector('.publication-list');
   if (container) {
     container.innerHTML = publications.map(pub => `
       <li class="publication-item">
@@ -329,12 +378,18 @@ async function loadBlogPage() {
 
   const query = `*[_type == "blogPost"] | order(date desc)`;
   const posts = await fetchFromSanity(query);
-  if (!posts || posts.length === 0) return;
+  
+  const container = document.getElementById('blog-grid') || document.querySelector('.grid.grid-3, .blog-list-container');
+  const emptyMsg = document.getElementById('blog-empty');
+  
+  if (!posts || posts.length === 0) {
+    if (emptyMsg) emptyMsg.style.display = 'block';
+    return;
+  }
 
-  const container = document.querySelector('.grid.grid-2, .blog-list-container');
   if (container) {
     container.innerHTML = posts.map(post => `
-      <div class="card reveal reveal-up">
+      <div class="card hover-lift reveal reveal-up">
         ${post.image ? `<img src="${urlFor(post.image)}" alt="${post.title?.[lang] || 'Blog Post'}" class="card-image">` : ''}
         <div class="card-body">
           <span class="badge mb-2">${post.category?.[lang] || ''}</span>
@@ -354,9 +409,15 @@ async function loadEventsPage() {
 
   const query = `*[_type == "event"] | order(date asc)`;
   const events = await fetchFromSanity(query);
-  if (!events || events.length === 0) return;
+  
+  const container = document.getElementById('events-list') || document.querySelector('.events-list-container, .grid');
+  const emptyMsg = document.getElementById('events-empty');
+  
+  if (!events || events.length === 0) {
+    if (emptyMsg) emptyMsg.style.display = 'block';
+    return;
+  }
 
-  const container = document.querySelector('.events-list-container, .grid');
   if (container) {
     container.innerHTML = events.map(evt => {
       const eventDate = new Date(evt.date);
@@ -460,6 +521,151 @@ async function loadPressPage() {
   }
 }
 
+// Form Submissions Handler
+function setupFormHandlers() {
+  // Contact Form
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn ? submitBtn.textContent : 'Send Message';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = isFrench ? 'Envoi en cours...' : 'Sending...';
+      }
+
+      const payload = {
+        formType: 'contact',
+        name: `${document.getElementById('first-name')?.value || ''} ${document.getElementById('last-name')?.value || ''}`.trim(),
+        email: document.getElementById('email')?.value || '',
+        phone: document.getElementById('phone')?.value || '',
+        service: document.getElementById('services')?.value || '',
+        message: document.getElementById('message')?.value || ''
+      };
+
+      try {
+        const response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showToast(isFrench ? 'Message envoyé avec succès !' : 'Message sent successfully!', 'success');
+          contactForm.reset();
+        } else {
+          showToast(result.error || (isFrench ? 'Erreur de transmission.' : 'Error sending message.'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast(isFrench ? 'Erreur de connexion.' : 'Network connection error.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      }
+    });
+  }
+
+  // Newsletter Form
+  const newsletterForm = document.getElementById('newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn ? submitBtn.textContent : 'Sign Up';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = isFrench ? 'Inscription...' : 'Signing up...';
+      }
+
+      const payload = {
+        formType: 'newsletter',
+        firstName: newsletterForm.querySelector('input[name="firstName"]')?.value || '',
+        lastName: newsletterForm.querySelector('input[name="lastName"]')?.value || '',
+        email: newsletterForm.querySelector('input[name="email"]')?.value || ''
+      };
+
+      try {
+        const response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showToast(isFrench ? 'Inscription réussie !' : 'Successfully subscribed!', 'success');
+          newsletterForm.reset();
+        } else {
+          showToast(result.error || (isFrench ? 'Erreur lors de l\'inscription.' : 'Subscription failed.'), 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast(isFrench ? 'Erreur de connexion.' : 'Network connection error.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      }
+    });
+  }
+}
+
+// Simple dynamic Toast notification
+function showToast(message, type = 'success') {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.style.position = 'fixed';
+    container.style.bottom = '20px';
+    container.style.right = '20px';
+    container.style.zIndex = '9999';
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.gap = '10px';
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.style.background = type === 'success' ? '#2e7d32' : '#c62828';
+  toast.style.color = '#fff';
+  toast.style.padding = '12px 24px';
+  toast.style.borderRadius = '8px';
+  toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+  toast.style.fontSize = '14px';
+  toast.style.fontWeight = '500';
+  toast.style.opacity = '0';
+  toast.style.transform = 'translateY(20px)';
+  toast.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  // Trigger animation
+  setTimeout(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+  }, 10);
+
+  // Hide after 4 seconds
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }, 4000);
+}
+
 // Initializer on DomContentLoad
 document.addEventListener('DOMContentLoaded', () => {
   loadGlobalSettings();
@@ -471,4 +677,5 @@ document.addEventListener('DOMContentLoaded', () => {
   loadEventsPage();
   loadConsultingPage();
   loadPressPage();
+  setupFormHandlers();
 });

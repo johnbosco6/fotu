@@ -18,9 +18,9 @@
   <header class="site-header" id="header">
     <div class="container nav-container">
       <a href="../index.html" class="site-title">Dr Fatoumata Sylla</a>
-      <nav class="main-nav" id="main-nav">
+            <nav class="main-nav" id="main-nav">
         <button class="nav-close-btn" id="nav-close" aria-label="Close Navigation">&times;</button>
-        <a href="../index.html" class="nav-link">Accueil</a>
+        <a href="index.html" class="nav-link">Accueil</a>
         <a href="about.html" class="nav-link active">À propos</a>
         <a href="research.html" class="nav-link">Recherche</a>
         <a href="publications.html" class="nav-link">Publications</a>
@@ -47,24 +47,53 @@
   <!-- About Content -->
   <section class="section pt-0">
     <div class="container">
-      <div class="grid grid-2 items-start gap-12">
-        <div class="reveal reveal-right">
-          <img src="../assets/images/profile.jpg" alt="Dr Fatoumata Sylla" class="about-image mb-6 w-full">
-          <div class="card p-6" style="padding: var(--space-6);">
-            <h3 class="mb-4">Faits en bref</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-3);">
-              <li><strong>Poste :</strong> Chercheuse en santé publique (INSERM, CESP)</li>
-              <li><strong>Spécialisation :</strong> Santé des femmes, MGF, Fibromes utérins</li>
-              <li><strong>Langues :</strong> Anglais, Français</li>
-            </ul>
-          </div>
+      <!-- Bio Section -->
+      <div class="about-bio-grid reveal reveal-up">
+        <div class="about-image-wrapper">
+          <img src="../assets/images/profile.jpg" alt="Dr Fatoumata Sylla" class="about-image">
         </div>
-        <div class="reveal reveal-left">
+        <div class="about-bio-content" id="about-bio-content">
           <h2>Biographie professionnelle</h2>
           <p>La Dr Fatoumata Sylla est une chercheuse en santé publique et médecin renommée, qui se consacre à l'amélioration de la santé des femmes dans le monde. Forte d'une vaste expérience en épidémiologie, ses travaux portent principalement sur les conséquences à long terme des mutilations génitales féminines (MGF) et sur les caractéristiques épidémiologiques des fibromes utérins.</p>
           <p>Elle est actuellement affiliée à l'Inserm et au CESP, où elle dirige des projets interdisciplinaires qui établissent des ponts entre les découvertes cliniques et les politiques de santé publique. Ses recherches ont joué un rôle déterminant dans la formulation de nouvelles directives pour les soins maternels et les interventions en santé reproductive.</p>
-          <a href="../assets/files/CV_Dr_Sylla.pdf" class="btn btn-primary mt-4" target="_blank">Télécharger le CV complet</a>
         </div>
+      </div>
+
+      <!-- Quick Facts -->
+      <div class="about-facts-grid reveal reveal-up" id="about-facts">
+        <div class="about-fact-card">
+          <div class="about-fact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <h4 class="about-fact-label">Poste</h4>
+          <p class="about-fact-value" id="fact-position">Chercheuse en santé publique (INSERM, CESP)</p>
+        </div>
+        <div class="about-fact-card">
+          <div class="about-fact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <h4 class="about-fact-label">Spécialisation</h4>
+          <p class="about-fact-value" id="fact-specialization">Santé des femmes, MGF, Fibromes utérins</p>
+        </div>
+        <div class="about-fact-card">
+          <div class="about-fact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <h4 class="about-fact-label">Langues</h4>
+          <p class="about-fact-value" id="fact-languages">Anglais, Français</p>
+        </div>
+      </div>
+
+      <!-- CV Download Card -->
+      <div class="about-cv-card reveal reveal-up" id="about-cv-card">
+        <div class="about-cv-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <div class="about-cv-info">
+          <h4>Curriculum Vitae</h4>
+          <p>Téléchargez le CV académique complet incluant publications, présentations et affiliations.</p>
+        </div>
+        <a href="../assets/files/CV_Dr_Sylla.pdf" class="btn btn-primary" target="_blank" id="cv-download-link">Télécharger le CV</a>
       </div>
     </div>
   </section>
@@ -97,30 +126,30 @@
     </div>
   </section>
 
-  <!-- Affiliations Section -->
-  <section class="section text-center" style="padding: var(--space-8) 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); background-color: var(--color-bg-alt);">
-    <div class="container">
-      <h3 style="font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-muted); margin-bottom: var(--space-6); font-weight: 600;">Affiliations Institutionnelles</h3>
-      <div style="display: flex; gap: var(--space-8); justify-content: center; align-items: center; flex-wrap: wrap;">
+  
+
+          <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-affiliations border-bottom" style="padding-bottom: var(--space-6); margin-bottom: var(--space-8); border-bottom: 1px solid var(--color-border); text-align: center;">
+      <h4 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-muted); margin-bottom: var(--space-4); font-weight: 600;">Affiliations Institutionnelles</h4>
+      <div class="affiliations-container" style="display: flex; gap: var(--space-8); justify-content: center; align-items: center; flex-wrap: wrap;">
+        <!-- Affiliations loaded dynamically from Sanity -->
         <a href="https://www.inserm.fr/" target="_blank" rel="noopener noreferrer" class="hover-lift" style="display: inline-block;">
-          <img src="../assets/logos/inserm.png" alt="Inserm" style="height: 60px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+          <img src="../assets/logos/inserm.png" alt="Inserm" style="height: 85px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
         </a>
         <a href="https://cesp.inserm.fr/" target="_blank" rel="noopener noreferrer" class="hover-lift" style="display: inline-block;">
-          <img src="../assets/logos/cesp.jpg" alt="CESP" style="height: 60px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+          <img src="../assets/logos/cesp.jpg" alt="CESP" style="height: 85px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
         </a>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
     <div class="container mb-12 border-bottom pb-12" style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-8); margin-bottom: var(--space-8);">
       <h3 class="footer-title text-center">Restez Informé(e)</h3>
       <p class="text-center text-muted mb-6">Abonnez-vous à ma newsletter pour recevoir des mises à jour sur mes nouvelles publications et événements.</p>
       <form class="newsletter-form" id="newsletter-form" style="max-width: 800px; margin: 0 auto;">
-        <input type="text" class="form-control" placeholder="Prénom" required>
-        <input type="text" class="form-control" placeholder="Nom" required>
-        <input type="email" class="form-control" placeholder="Adresse e-mail" required>
+        <input type="text" class="form-control" name="firstName" placeholder="Prénom" required>
+        <input type="text" class="form-control" name="lastName" placeholder="Nom" required>
+        <input type="email" class="form-control" name="email" placeholder="Adresse e-mail" required>
         <button type="submit" class="btn btn-primary">S'inscrire</button>
       </form>
     </div>
@@ -182,8 +211,6 @@
     
     <div class="container footer-bottom">
       <p>&copy; 2026 Dr Fatoumata Sylla. Tous droits réservés.</p>
-      <!-- Google Translate Widget Placeholder -->
-      <div id="google_translate_element"></div>
     </div>
   </footer>
 

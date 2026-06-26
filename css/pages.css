@@ -273,3 +273,159 @@
   font-weight: 500;
   font-size: var(--text-sm);
 }
+
+/* About Page - Redesigned Layout */
+.about-bio-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-12);
+  align-items: start;
+  margin-bottom: var(--space-12);
+}
+
+@media (max-width: 768px) {
+  .about-bio-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.about-image-wrapper {
+  position: sticky;
+  top: 100px;
+}
+
+.about-bio-content h2 {
+  margin-bottom: var(--space-4);
+}
+
+.about-bio-content p {
+  line-height: 1.8;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.about-bio-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Quick Facts Grid */
+.about-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-10);
+}
+
+@media (max-width: 768px) {
+  .about-facts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-fact-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.about-fact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-primary-light);
+}
+
+.about-fact-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-alt);
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.about-fact-label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+  font-weight: 600;
+}
+
+.about-fact-value {
+  font-weight: 500;
+  color: var(--color-text-main);
+  margin: 0;
+  font-size: var(--text-base);
+}
+
+/* CV Download Card */
+.about-cv-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-8);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.about-cv-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-light);
+}
+
+@media (max-width: 768px) {
+  .about-cv-card {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-6);
+  }
+}
+
+.about-cv-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-alt);
+  color: var(--color-primary);
+}
+
+.about-cv-info {
+  flex-grow: 1;
+}
+
+.about-cv-info h4 {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-lg);
+}
+
+.about-cv-info p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Timeline Enhancements */
+.timeline-item h4 {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-lg);
+}
+
+.timeline-item p {
+  color: var(--color-text-muted);
+  margin: 0;
+}

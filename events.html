@@ -43,47 +43,38 @@
     <div class="container">
       <div class="reveal reveal-up">
         <h2 class="mb-6">Upcoming Events</h2>
-        
-        <div class="card mb-4" style="flex-direction: row; align-items: center; padding: 1.5rem;">
-          <div style="flex-shrink: 0; background: var(--color-bg-alt); padding: 1.5rem; border-radius: 8px; text-align: center; margin-right: 2rem;">
-            <span style="display: block; font-weight: 700; color: var(--color-primary); font-size: 2rem;">15</span>
-            <span style="display: block; text-transform: uppercase; font-size: 1rem;">Oct</span>
-          </div>
-          <div>
-            <h3 style="margin-bottom: 0.5rem;">Global Health Summit 2026</h3>
-            <p style="color: var(--color-text-muted); font-size: 1rem; margin-bottom: 0.5rem;">Geneva, Switzerland</p>
-            <p>Keynote Speaker: Innovations in FGM Prevention and Post-Care.</p>
-          </div>
+        <div id="events-list" class="events-list-container">
+          <!-- Events loaded dynamically from Sanity CMS -->
         </div>
-
+        <p class="text-center text-muted mt-8" id="events-empty" style="display: none;">No upcoming events. Check back soon!</p>
       </div>
     </div>
   </section>
 
-  <!-- Affiliations Section -->
-  <section class="section text-center" style="padding: var(--space-8) 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); background-color: var(--color-bg-alt);">
-    <div class="container">
-      <h3 style="font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-muted); margin-bottom: var(--space-6); font-weight: 600;">Institutional Affiliations</h3>
-      <div style="display: flex; gap: var(--space-8); justify-content: center; align-items: center; flex-wrap: wrap;">
+  
+
+        <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-affiliations border-bottom" style="padding-bottom: var(--space-6); margin-bottom: var(--space-8); border-bottom: 1px solid var(--color-border); text-align: center;">
+      <h4 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-muted); margin-bottom: var(--space-4); font-weight: 600;">Institutional Affiliations</h4>
+      <div class="affiliations-container" style="display: flex; gap: var(--space-8); justify-content: center; align-items: center; flex-wrap: wrap;">
+        <!-- Affiliations loaded dynamically from Sanity -->
         <a href="https://www.inserm.fr/" target="_blank" rel="noopener noreferrer" class="hover-lift" style="display: inline-block;">
-          <img src="assets/logos/inserm.png" alt="Inserm" style="height: 60px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+          <img src="assets/logos/inserm.png" alt="Inserm" style="height: 85px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
         </a>
         <a href="https://cesp.inserm.fr/" target="_blank" rel="noopener noreferrer" class="hover-lift" style="display: inline-block;">
-          <img src="assets/logos/cesp.jpg" alt="CESP" style="height: 60px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+          <img src="assets/logos/cesp.jpg" alt="CESP" style="height: 85px; max-width: 100%; object-fit: contain; background: white; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
         </a>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
     <div class="container mb-12 border-bottom pb-12" style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-8); margin-bottom: var(--space-8);">
       <h3 class="footer-title text-center">Stay Updated</h3>
       <p class="text-center text-muted mb-6">Subscribe to my newsletter to receive updates on new research publications, upcoming lectures, and events.</p>
       <form class="newsletter-form" id="newsletter-form" style="max-width: 800px; margin: 0 auto;">
-        <input type="text" class="form-control" placeholder="First Name" required>
-        <input type="text" class="form-control" placeholder="Last Name" required>
-        <input type="email" class="form-control" placeholder="Email Address" required>
+        <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
+        <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+        <input type="email" class="form-control" name="email" placeholder="Email Address" required>
         <button type="submit" class="btn btn-primary">Sign Up</button>
       </form>
     </div>
@@ -145,8 +136,6 @@
     
     <div class="container footer-bottom">
       <p>&copy; 2026 Dr. Fatoumata Sylla. All rights reserved.</p>
-      <!-- Google Translate Widget Placeholder -->
-      <div id="google_translate_element"></div>
     </div>
   </footer>
 

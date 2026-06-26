@@ -23,6 +23,11 @@ export default {
       type: 'localizedString'
     },
     {
+      title: 'Short Card Description',
+      name: 'shortDescription',
+      type: 'localizedText'
+    },
+    {
       title: 'Banner Image',
       name: 'bannerImage',
       type: 'image',
