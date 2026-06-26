@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events | Dr. Fatoumata Sylla</title>
+  <title>Conditions d'utilisation | Dr. Fatoumata Sylla</title>
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/layout.css">
@@ -16,17 +16,19 @@
   <header class="site-header" id="header">
     <div class="container nav-container">
       <a href="../index.html" class="site-title">Dr. Fatoumata Sylla</a>
-      <nav class="main-nav" id="main-nav">
+            <nav class="main-nav" id="main-nav">
         <button class="nav-close-btn" id="nav-close" aria-label="Close Navigation">&times;</button>
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../about.html" class="nav-link">About</a>
-        <a href="research.html" class="nav-link">Research</a>
+        <a href="index.html" class="nav-link">Accueil</a>
+        <a href="about.html" class="nav-link">À propos</a>
+        <a href="research.html" class="nav-link">Recherche</a>
         <a href="publications.html" class="nav-link">Publications</a>
-        <a href="blog.html" class="nav-link">News</a>
+        <a href="lecturing.html" class="nav-link">Consulting</a>
+        <a href="blog.html" class="nav-link">Actualités</a>
         <a href="contact.html" class="nav-link">Contact</a>
-        <button class="lang-toggle active">EN</button>
+        
+        <button class="lang-toggle" onclick="window.location.href='../terms.html'">EN</button>
         <span class="lang-separator">|</span>
-        <button class="lang-toggle" onclick="window.location.href='fr/events.html'">FR</button>
+        <button class="lang-toggle active" onclick="window.location.href='terms.html'">FR</button>
       </nav>
       <button class="mobile-nav-toggle" id="mobile-toggle">☰</button>
     </div>
@@ -34,35 +36,33 @@
 
   <div class="page-header">
     <div class="container reveal reveal-up">
-      <h1 class="page-title">Events</h1>
-      <p class="page-subtitle">Upcoming conferences, seminars, and speaking engagements.</p>
+      <h1 class="page-title">Conditions d'utilisation</h1>
     </div>
   </div>
 
   <section class="section pt-0">
-    <div class="container">
-      <div class="reveal reveal-up">
-        <h2 class="mb-6">Upcoming Events</h2>
-        
-        <div class="card mb-4" style="flex-direction: row; align-items: center; padding: 1.5rem;">
-          <div style="flex-shrink: 0; background: var(--color-bg-alt); padding: 1.5rem; border-radius: 8px; text-align: center; margin-right: 2rem;">
-            <span style="display: block; font-weight: 700; color: var(--color-primary); font-size: 2rem;">15</span>
-            <span style="display: block; text-transform: uppercase; font-size: 1rem;">Oct</span>
-          </div>
-          <div>
-            <h3 style="margin-bottom: 0.5rem;">Global Health Summit 2026</h3>
-            <p style="color: var(--color-text-muted); font-size: 1rem; margin-bottom: 0.5rem;">Geneva, Switzerland</p>
-            <p>Keynote Speaker: Innovations in FGM Prevention and Post-Care.</p>
-          </div>
-        </div>
-
-      </div>
+    <div class="container reveal reveal-up" style="max-width: 800px; margin: 0 auto;">
+      <p>Dernière mise à jour : Juin 2026</p>
+      
+      <h3 class="mt-8">1. Acceptation des conditions</h3>
+      <p>En accédant à ce site et en l'utilisant, vous acceptez de vous conformer à ces conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser ce site.</p>
+      
+      <h3 class="mt-8">2. Propriété intellectuelle</h3>
+      <p>Toutes les publications académiques, diapositives de présentation, textes, diagrammes, conceptions de mise en page et graphiques affichés sur ce site Web sont la propriété intellectuelle de la Dr Fatoumata Sylla et de ses partenaires institutionnels (Inserm, CESP, etc.), sauf mention contraire. Vous pouvez lire et télécharger des documents pour un usage personnel, non commercial et éducatif uniquement, sous réserve d'une citation appropriée.</p>
+      
+      <h3 class="mt-8">3. Exigences relatives aux citations académiques</h3>
+      <p>Toutes les publications de recherche, modèles de données ou figures référencés à partir de ce site Web doivent être cités conformément aux normes académiques applicables, en désignant la Dr Fatoumata Sylla comme auteur/co-auteur et en créant un lien vers l'éditeur d'origine ou le DOI correspondant.</p>
+      
+      <h3 class="mt-8">4. Limitation de responsabilité</h3>
+      <p>Le contenu de ce site Web est fourni uniquement à des fins d'information et d'études universitaires. La Dr Fatoumata Sylla ne garantit pas l'exhaustivité ni l'exactitude absolue des informations extraites de manière dynamique ou historique. En aucun cas, elle ne sera responsable des dommages directs ou indirects découlant de l'utilisation des documents de ce site.</p>
+      
+      <h3 class="mt-8">5. Modifications du service</h3>
+      <p>Nous nous réservons le droit de modifier ou de suspendre tout ou partie du site Web ou des collections de contenu à tout moment et sans préavis.</p>
     </div>
   </section>
 
-  
-
-            <!-- Footer -->
+  <!-- Footer placeholder (will be replaced dynamically by build footer script) -->
+    <!-- Footer -->
   <footer class="site-footer">
     <div class="container footer-affiliations border-bottom" style="padding-bottom: var(--space-6); margin-bottom: var(--space-8); border-bottom: 1px solid var(--color-border); text-align: center;">
       <h4 style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 2px; color: var(--color-text-muted); margin-bottom: var(--space-4); font-weight: 600;">Affiliations Institutionnelles</h4>
@@ -160,11 +160,7 @@
   </footer>
 
   <script src="../js/main.js"></script>
-  <script src="../js/animations.js"></script>
   <!-- Sanity CMS Client -->
   <script src="../js/sanity.js" defer></script>
 </body>
 </html>
-
-
-
