@@ -62,6 +62,17 @@ try {
 
   console.log('Copying Studio build to deployment directory...');
   copyFolderSync(srcDist, destStudio);
+  
+  // Post-process index.html to ensure any remaining /static/ references (like favicon/manifest) point to /studio/static/
+  const indexPath = path.join(destStudio, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    let indexHtml = fs.readFileSync(indexPath, 'utf8');
+    indexHtml = indexHtml.replace(/href="\/static\//g, 'href="/studio/static/');
+    indexHtml = indexHtml.replace(/src="\/static\//g, 'src="/studio/static/');
+    fs.writeFileSync(indexPath, indexHtml, 'utf8');
+    console.log('Rewrote /static/ references to /studio/static/ in index.html');
+  }
+
   console.log('Studio successfully placed in deployment folder /studio');
 } catch (error) {
   console.error('Error compiling Sanity Studio:', error);
