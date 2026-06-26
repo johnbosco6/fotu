@@ -1,0 +1,8 @@
+# Node dependencies
+node_modules/
+.npm/
+
+# Sanity Studio build output
+studio/node_modules/
+studio/dist/
+.sanity/
