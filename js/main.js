@@ -4,11 +4,34 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mobile Navigation Toggle
   const mobileToggle = document.getElementById('mobile-toggle');
   const mainNav = document.getElementById('main-nav');
+  const navClose = document.getElementById('nav-close');
   
-  if (mobileToggle && mainNav) {
-    mobileToggle.addEventListener('click', () => {
-      mainNav.classList.toggle('nav-open');
-      mobileToggle.textContent = mainNav.classList.contains('nav-open') ? '✕' : '☰';
+  function openNav() {
+    if (mainNav) {
+      mainNav.classList.add('nav-open');
+      if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  function closeNav() {
+    if (mainNav) {
+      mainNav.classList.remove('nav-open');
+      if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', openNav);
+  }
+
+  if (navClose) {
+    navClose.addEventListener('click', closeNav);
+  }
+
+  // Close nav when clicking a nav link (mobile)
+  if (mainNav) {
+    mainNav.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', closeNav);
     });
   }
 
