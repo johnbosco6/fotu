@@ -4,11 +4,25 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--space-4);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--space-6);
+  }
 }
 
 .section {
-  padding: var(--space-16) 0;
+  padding: var(--space-8) 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--space-16) 0;
+  }
 }
 
 .section-bg-alt {
