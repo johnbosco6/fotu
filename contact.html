@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Dr. Fatoumata Sylla</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header" id="header">
+    <div class="container nav-container">
+      <a href="index.html" class="site-title">Dr. Fatoumata Sylla</a>
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="research.html" class="nav-link">Research</a>
+        <a href="publications.html" class="nav-link">Publications</a>
+        <a href="lecturing.html" class="nav-link">Consulting</a>
+        <a href="blog.html" class="nav-link">News</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        
+        <button class="lang-toggle active" onclick="window.location.href='contact.html'">EN</button>
+        <span class="lang-separator">|</span>
+        <button class="lang-toggle" onclick="window.location.href='fr/contact.html'">FR</button>
+      </nav>
+      <button class="mobile-nav-toggle" id="mobile-toggle">☰</button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container reveal reveal-up">
+      <h1 class="page-title">Contact</h1>
+      <p class="page-subtitle">Interested in collaborating with Dr. Sylla? Reach out below.</p>
+    </div>
+  </div>
+
+  <section class="section pt-0">
+    <div class="container">
+      <div class="grid grid-2">
+        
+        <!-- Contact Form -->
+        <div class="reveal reveal-left">
+          <form id="contact-form" class="card p-6" style="padding: var(--space-8);">
+            <div class="grid grid-2 gap-4">
+              <div class="form-group">
+                <label for="first-name" class="form-label">First Name *</label>
+                <input type="text" id="first-name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name" class="form-label">Last Name *</label>
+                <input type="text" id="last-name" class="form-control" required>
+              </div>
+            </div>
+            
+            <div class="grid grid-2 gap-4">
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" id="email" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="tel" id="phone" class="form-control">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="services" class="form-label">Services Interested In</label>
+              <select id="services" class="form-control">
+                <option value="">-- Select an option --</option>
+                <option value="research">Research Collaboration</option>
+                <option value="speaking">Speaking / Lecturing</option>
+                <option value="consulting">Consulting</option>
+                <option value="media">Media Inquiry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="message" class="form-label">Message *</label>
+              <textarea id="message" class="form-control" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mt-4">Send Message</button>
+          </form>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="reveal reveal-right">
+          <h2>Direct Contact</h2>
+          <p class="mb-8">For academic inquiries, you may also reach Dr. Sylla through her institutional affiliations.</p>
+          
+          <div class="mb-8">
+            <h4 class="mb-2">Institutional Affiliations</h4>
+            <p><strong>Inserm</strong><br>
+            Institut national de la santé et de la recherche médicale</p>
+            <p><strong>CESP</strong><br>
+            Centre de recherche en Épidémiologie et Santé des Populations</p>
+          </div>
+          
+          <div>
+            <h4 class="mb-4">Connect on Social Media</h4>
+            <div class="social-links" style="gap: var(--space-6);">
+              <a href="#" aria-label="LinkedIn" class="btn btn-secondary">LinkedIn</a>
+              <a href="#" aria-label="ORCiD" class="btn btn-secondary">ORCiD</a>
+              <a href="#" aria-label="Google Scholar" class="btn btn-secondary">Google Scholar</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Dr. Fatoumata Sylla. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/forms.js"></script>
+</body>
+</html>
+
+
+

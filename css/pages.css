@@ -1,0 +1,151 @@
+/* pages.css - Page Specific Overrides */
+
+/* Page Header (for non-home pages) */
+.page-header {
+  background-color: var(--color-bg-alt);
+  padding: var(--space-12) 0;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-12);
+}
+
+.page-title {
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.page-subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* About Page */
+.about-image {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.timeline {
+  position: relative;
+  border-left: 2px solid var(--color-primary-light);
+  padding-left: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: var(--space-8);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--space-6) * -1 - 6px); /* -24px - 6px (half width) + 1px (half border) = -29px approx */
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+}
+
+.timeline-date {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+/* Publications */
+.publication-list {
+  list-style: none;
+  padding: 0;
+}
+
+.publication-item {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.publication-item:last-child {
+  border-bottom: none;
+}
+
+.pub-title {
+  font-weight: 600;
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-1);
+}
+
+.pub-authors {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.pub-journal {
+  font-style: italic;
+  margin-bottom: var(--space-2);
+}
+
+.pub-links {
+  display: flex;
+  gap: var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+/* Search Modal */
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.98);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-12) var(--space-6);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+}
+
+.search-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-close {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+.search-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  font-size: var(--text-2xl);
+  border: none;
+  border-bottom: 2px solid var(--color-primary);
+  padding: var(--space-4) 0;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-heading);
+}
+
+.search-results {
+  margin-top: var(--space-8);
+  max-height: 60vh;
+  overflow-y: auto;
+}
