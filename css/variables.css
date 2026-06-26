@@ -1,9 +1,9 @@
 /* variables.css - Design System Tokens */
 :root {
   /* Colors */
-  --color-primary: #A2653E;
-  --color-primary-light: #BF7E54;
-  --color-primary-dark: #85502E;
+  --color-primary: #B2744D;
+  --color-primary-light: #CD906A;
+  --color-primary-dark: #945732;
   --color-secondary: #C49273;
   
   --color-text-main: #000000;
