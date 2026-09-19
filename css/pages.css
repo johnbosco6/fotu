@@ -291,8 +291,14 @@
 }
 
 .about-image-wrapper {
-  position: sticky;
-  top: 100px;
+  position: static;
+}
+
+@media (min-width: 769px) {
+  .about-image-wrapper {
+    position: sticky;
+    top: 100px;
+  }
 }
 
 .about-bio-content h2 {
