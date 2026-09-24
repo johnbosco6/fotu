@@ -34,7 +34,7 @@ try {
   execSync('npm install --legacy-peer-deps', { cwd: path.join(__dirname, 'studio-src'), stdio: 'inherit' });
 
   console.log('Building Sanity Studio...');
-  execSync('npm run build', { cwd: path.join(__dirname, 'studio-src'), stdio: 'inherit' });
+  execSync('npm run build', { cwd: path.join(__dirname, 'studio-src'), stdio: 'inherit', env: { ...process.env, SANITY_DISABLE_UPDATE_CHECK: '1', SANITY_NO_UPDATE_CHECK: '1' } });
 
   const srcDist = path.join(__dirname, 'studio-src', 'dist');
   const destStudio = path.join(__dirname, 'studio');

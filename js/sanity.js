@@ -67,13 +67,90 @@ async function fetchFromSanity(query) {
   }
 }
 
-// Global settings loader: footer, social links, logo affiliations
+// Global settings loader: Header title, Nav items, Footer, social links, logo affiliations, newsletter
 async function loadGlobalSettings() {
   const query = `*[_type == "globalSettings"][0]`;
   const settings = await fetchFromSanity(query);
   if (!settings) return;
 
-  // Social Links (using robust selectors matching both URL substring and aria-labels)
+  // Site Title across Header and Footer
+  if (settings.siteTitle?.[lang]) {
+    const siteTitleElems = document.querySelectorAll('.site-title');
+    siteTitleElems.forEach(el => {
+      el.textContent = settings.siteTitle[lang];
+    });
+  }
+
+  // Header Navigation Menu
+  if (settings.navItems && settings.navItems.length > 0) {
+    const navContainer = document.querySelector('.main-nav');
+    if (navContainer) {
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+      const closeBtn = navContainer.querySelector('.nav-close-btn');
+      const langToggles = navContainer.querySelectorAll('.lang-toggle, .lang-separator');
+
+      let navHTML = '';
+      if (closeBtn) navHTML += closeBtn.outerHTML;
+
+      settings.navItems.forEach(item => {
+        const itemUrl = item.url || '#';
+        const itemLabel = item.label?.[lang] || '';
+        const isActive = currentPath === itemUrl || (currentPath === '' && itemUrl === 'index.html');
+        const href = isFrench ? (itemUrl.startsWith('fr/') ? itemUrl : `fr/${itemUrl}`) : itemUrl.replace(/^fr\//, '');
+        navHTML += `<a href="${href}" class="nav-link ${isActive ? 'active' : ''}">${itemLabel}</a>`;
+      });
+
+      langToggles.forEach(el => {
+        navHTML += el.outerHTML;
+      });
+
+      navContainer.innerHTML = navHTML;
+    }
+  }
+
+  // Footer Bio / Tagline
+  if (settings.footerBio?.[lang]) {
+    const footerBioEl = document.querySelector('.site-footer .site-title + p');
+    if (footerBioEl) footerBioEl.textContent = settings.footerBio[lang];
+  }
+
+  // Footer Nav Links
+  if (settings.footerNavLinks && settings.footerNavLinks.length > 0) {
+    const footerNavUl = document.querySelector('.footer-grid > div:nth-child(2) .footer-links');
+    if (footerNavUl) {
+      footerNavUl.innerHTML = settings.footerNavLinks.map(item => {
+        const itemUrl = item.url || '#';
+        const itemLabel = item.label?.[lang] || '';
+        const href = isFrench ? (itemUrl.startsWith('fr/') ? itemUrl : `fr/${itemUrl}`) : itemUrl.replace(/^fr\//, '');
+        return `<li><a href="${href}">${itemLabel}</a></li>`;
+      }).join('');
+    }
+  }
+
+  // Footer Research Links
+  if (settings.footerResearchLinks && settings.footerResearchLinks.length > 0) {
+    const footerResearchUl = document.querySelector('.footer-grid > div:nth-child(3) .footer-links');
+    if (footerResearchUl) {
+      footerResearchUl.innerHTML = settings.footerResearchLinks.map(item => {
+        const itemUrl = item.url || '#';
+        const itemLabel = item.label?.[lang] || '';
+        const href = isFrench ? (itemUrl.startsWith('fr/') ? itemUrl : `fr/${itemUrl}`) : itemUrl.replace(/^fr\//, '');
+        return `<li><a href="${href}">${itemLabel}</a></li>`;
+      }).join('');
+    }
+  }
+
+  // Newsletter Title & Subtitle in Footer
+  if (settings.newsletterTitle?.[lang]) {
+    const newsTitleEl = document.querySelector('.site-footer .footer-title.text-center');
+    if (newsTitleEl) newsTitleEl.textContent = settings.newsletterTitle[lang];
+  }
+  if (settings.newsletterSubtitle?.[lang]) {
+    const newsSubEl = document.querySelector('.site-footer p.text-center.text-muted');
+    if (newsSubEl) newsSubEl.textContent = settings.newsletterSubtitle[lang];
+  }
+
+  // Social Links
   const linkedinElems = document.querySelectorAll('a[href*="linkedin.com"], a[aria-label="LinkedIn"], a[aria-label="Linkedin"]');
   const orcidElems = document.querySelectorAll('a[href*="orcid.org"], a[aria-label="ORCID"], a[aria-label="ORCiD"]');
   const scholarElems = document.querySelectorAll('a[href*="scholar.google"], a[aria-label="Google Scholar"]');
@@ -86,14 +163,16 @@ async function loadGlobalSettings() {
 
   // Email inquiry
   if (settings.contactEmail) {
-    const emailLink = document.querySelector('a[href^="mailto:contact@"]');
-    if (emailLink) {
-      emailLink.href = `mailto:${settings.contactEmail}`;
-      emailLink.textContent = settings.contactEmail;
-    }
+    const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+    emailLinks.forEach(link => {
+      if (link.href.includes('contact@') || link.textContent.includes('contact@')) {
+        link.href = `mailto:${settings.contactEmail}`;
+        link.textContent = settings.contactEmail;
+      }
+    });
   }
 
-  // Affiliations inside Footer (with enlarged size)
+  // Affiliations inside Footer
   if (settings.affiliations && settings.affiliations.length > 0) {
     const containers = document.querySelectorAll('.affiliations-container');
     containers.forEach(container => {
@@ -108,6 +187,9 @@ async function loadGlobalSettings() {
 
 // Homepage specific data loader
 async function loadHomepage() {
+  const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.endsWith('/fr/') || window.location.pathname.endsWith('/fr');
+  if (!isHome) return;
+
   const query = `*[_type == "homepage"][0]`;
   const data = await fetchFromSanity(query);
   if (!data) return;
@@ -117,12 +199,14 @@ async function loadHomepage() {
   const heroImage = document.querySelector('.profile-img');
   const introTitle = document.querySelector('.section h2');
   const introDesc = document.querySelector('.section p[style*="max-width"]');
+  const researchSectionTitle = document.querySelector('.section:nth-of-type(2) h2');
 
   if (heroTitle && data.heroTitle?.[lang]) heroTitle.textContent = data.heroTitle[lang];
   if (heroSubtitle && data.heroSubtitle?.[lang]) heroSubtitle.textContent = data.heroSubtitle[lang];
   if (heroImage && data.profileImage) heroImage.src = urlFor(data.profileImage);
   if (introTitle && data.introTitle?.[lang]) introTitle.textContent = data.introTitle[lang];
   if (introDesc && data.introDescription?.[lang]) introDesc.textContent = data.introDescription[lang];
+  if (researchSectionTitle && data.researchTitle?.[lang]) researchSectionTitle.textContent = data.researchTitle[lang];
 
   // Load latest publications on homepage
   const homePubList = document.getElementById('home-publications-list');
@@ -174,15 +258,25 @@ async function loadHomepage() {
 
 // About Page specific data loader
 async function loadAboutPage() {
+  const isAboutPage = window.location.pathname.includes('about.html');
+  if (!isAboutPage) return;
+
   const query = `*[_type == "aboutPage"][0]`;
   const data = await fetchFromSanity(query);
   if (!data) return;
 
-  // Biography content (new layout uses #about-bio-content)
+  const pageTitle = document.querySelector('.page-title');
+  const pageSubtitle = document.querySelector('.page-subtitle');
   const bioContainer = document.getElementById('about-bio-content');
   const profileImage = document.querySelector('.about-image');
   const cvLink = document.getElementById('cv-download-link');
+  const journeyTitle = document.querySelector('.section-bg-alt h2');
 
+  if (pageTitle && data.pageTitle?.[lang]) pageTitle.textContent = data.pageTitle[lang];
+  if (pageSubtitle && data.pageSubtitle?.[lang]) pageSubtitle.textContent = data.pageSubtitle[lang];
+  if (journeyTitle && data.journeyTitle?.[lang]) journeyTitle.textContent = data.journeyTitle[lang];
+
+  // Biography content
   if (bioContainer && data.bioContent?.[lang]) {
     const titleHTML = `<h2>${data.bioTitle?.[lang] || (isFrench ? 'Biographie professionnelle' : 'Professional Biography')}</h2>`;
     const blocksHTML = portableTextToHTML(data.bioContent[lang]);
@@ -194,12 +288,13 @@ async function loadAboutPage() {
 
   if (profileImage && data.profileImage) profileImage.src = urlFor(data.profileImage);
 
-  // CV File download
-  if (cvLink && data.cvFile) {
-    cvLink.href = fileUrlFor(data.cvFile);
+  // CV File download & label
+  if (cvLink) {
+    if (data.cvFile) cvLink.href = fileUrlFor(data.cvFile);
+    if (data.cvButtonLabel?.[lang]) cvLink.textContent = data.cvButtonLabel[lang];
   }
 
-  // Quick Facts (new layout uses individual #fact-* IDs)
+  // Quick Facts
   if (data.quickFacts) {
     const posEl = document.getElementById('fact-position');
     const specEl = document.getElementById('fact-specialization');
@@ -225,12 +320,32 @@ async function loadAboutPage() {
   }
 }
 
+// Contact Page loader
+async function loadContactPage() {
+  const isContact = window.location.pathname.includes('contact.html');
+  if (!isContact) return;
+
+  const query = `*[_type == "contactPage"][0]`;
+  const data = await fetchFromSanity(query);
+  if (!data) return;
+
+  const pageTitle = document.querySelector('.page-title');
+  const pageSubtitle = document.querySelector('.page-subtitle');
+  const connectTitle = document.querySelector('.reveal-right h2');
+  const connectDesc = document.querySelector('.reveal-right p.mb-8');
+
+  if (pageTitle && data.heroTitle?.[lang]) pageTitle.textContent = data.heroTitle[lang];
+  if (pageSubtitle && data.heroSubtitle?.[lang]) pageSubtitle.textContent = data.heroSubtitle[lang];
+  if (connectTitle && data.connectTitle?.[lang]) connectTitle.textContent = data.connectTitle[lang];
+  if (connectDesc && data.connectDescription?.[lang]) connectDesc.textContent = data.connectDescription[lang];
+}
+
 // Research Page & Subpages loader
 async function loadResearchPages() {
   const isFgmPage = window.location.pathname.includes('research-fgm');
   const isFibroidsPage = window.location.pathname.includes('research-fibroids');
 
-  // Check if cards linking to research subpages are present in the DOM (e.g. homepage or research overview page)
+  // Check if cards linking to research subpages are present in DOM
   const cardLinks = document.querySelectorAll('a[href*="research-fgm"], a[href*="research-fibroids"]');
   if (cardLinks.length > 0) {
     const query = `*[_type == "researchArea"]`;
@@ -238,7 +353,6 @@ async function loadResearchPages() {
     if (areas && areas.length > 0) {
       areas.forEach(area => {
         const areaSlug = area.slug?.current || '';
-        // Find all links referencing this area's slug
         const matches = document.querySelectorAll(`a[href*="${areaSlug}"]`);
         matches.forEach(cardLink => {
           const card = cardLink.closest('.card');
@@ -300,10 +414,8 @@ async function loadResearchPages() {
     const pubQuery = `*[_type == "publication" && references('${data._id}')] | order(year desc)`;
     const relatedPubs = await fetchFromSanity(pubQuery);
     if (relatedPubs && relatedPubs.length > 0) {
-      // Inject "Related Publications" section
       let pubSection = document.getElementById('related-publications-section');
       if (!pubSection) {
-        // If related publications list container doesn't exist, we add it before the footer/affiliations
         const container = document.querySelector('.section .container');
         if (container) {
           const sec = document.createElement('div');
@@ -489,9 +601,14 @@ async function loadPressPage() {
   const data = await fetchFromSanity(query);
   if (!data) return;
 
-  const pressDesc = document.querySelector('a[download]').parentElement.querySelector('p');
+  const pageTitle = document.querySelector('.page-title');
+  const pageSubtitle = document.querySelector('.page-subtitle');
+  const pressDesc = document.querySelector('a[download]')?.parentElement?.querySelector('p');
   const pressBtn = document.querySelector('a[download]');
   const mediaContact = document.querySelector('a[href^="mailto:media@"]');
+
+  if (pageTitle && data.heroTitle?.[lang]) pageTitle.textContent = data.heroTitle[lang];
+  if (pageSubtitle && data.heroSubtitle?.[lang]) pageSubtitle.textContent = data.heroSubtitle[lang];
 
   if (pressDesc && data.pressDescription?.[lang]) pressDesc.textContent = data.pressDescription[lang];
   if (pressBtn && data.pressKitFile) pressBtn.href = fileUrlFor(data.pressKitFile);
@@ -650,13 +767,11 @@ function showToast(message, type = 'success') {
 
   container.appendChild(toast);
 
-  // Trigger animation
   setTimeout(() => {
     toast.style.opacity = '1';
     toast.style.transform = 'translateY(0)';
   }, 10);
 
-  // Hide after 4 seconds
   setTimeout(() => {
     toast.style.opacity = '0';
     toast.style.transform = 'translateY(20px)';
@@ -677,5 +792,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadEventsPage();
   loadConsultingPage();
   loadPressPage();
+  loadContactPage();
   setupFormHandlers();
 });

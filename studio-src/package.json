@@ -12,7 +12,7 @@
   },
   "scripts": {
     "dev": "sanity dev",
-    "build": "sanity build",
+    "build": "sanity build --no-update-check",
     "start": "sanity start"
   }
 }

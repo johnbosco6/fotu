@@ -2,7 +2,6 @@ export default {
   title: 'Homepage',
   name: 'homepage',
   type: 'document',
-  // Standard singleton pattern settings in Sanity (configured in config/desk tool)
   fields: [
     {
       title: 'Hero Title',
@@ -29,6 +28,21 @@ export default {
       title: 'Introduction Description',
       name: 'introDescription',
       type: 'localizedText'
+    },
+    {
+      title: 'Research Section Title',
+      name: 'researchTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Publications Section Title',
+      name: 'publicationsTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Events Section Title',
+      name: 'eventsTitle',
+      type: 'localizedString'
     }
   ]
 }

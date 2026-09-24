@@ -10,6 +10,7 @@ import press from './schemas/press.js';
 import settings from './schemas/settings.js';
 import contactSubmission from './schemas/contactSubmission.js';
 import newsletterSubmission from './schemas/newsletterSubmission.js';
+import contactPage from './schemas/contactPage.js';
 
 export const schemaTypes = [
   localizedString,
@@ -23,6 +24,7 @@ export const schemaTypes = [
   event,
   consulting,
   press,
+  contactPage,
   settings,
   contactSubmission,
   newsletterSubmission

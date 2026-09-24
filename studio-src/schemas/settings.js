@@ -6,7 +6,64 @@ export default {
     {
       title: 'Site Title',
       name: 'siteTitle',
-      type: 'string'
+      type: 'localizedString'
+    },
+    {
+      title: 'Header Navigation Menu Items',
+      name: 'navItems',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { title: 'Label', name: 'label', type: 'localizedString' },
+            { title: 'URL Link', name: 'url', type: 'string' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Footer Bio / Tagline',
+      name: 'footerBio',
+      type: 'localizedText'
+    },
+    {
+      title: 'Footer Navigation Links',
+      name: 'footerNavLinks',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { title: 'Label', name: 'label', type: 'localizedString' },
+            { title: 'URL Link', name: 'url', type: 'string' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Footer Research Links',
+      name: 'footerResearchLinks',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { title: 'Label', name: 'label', type: 'localizedString' },
+            { title: 'URL Link', name: 'url', type: 'string' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Newsletter Section Title',
+      name: 'newsletterTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Newsletter Section Subtitle',
+      name: 'newsletterSubtitle',
+      type: 'localizedText'
     },
     {
       title: 'LinkedIn Link',

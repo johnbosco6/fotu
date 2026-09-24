@@ -49,6 +49,15 @@ export default defineConfig({
                   .schemaType('pressPage')
                   .documentId('pressPage')
               ),
+            // Singleton: Contact Page
+            S.listItem()
+              .title('Contact Page')
+              .id('contactPage')
+              .child(
+                S.document()
+                  .schemaType('contactPage')
+                  .documentId('contactPage')
+              ),
             // Singleton: Global Settings
             S.listItem()
               .title('Global Settings')

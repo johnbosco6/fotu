@@ -4,6 +4,16 @@ export default {
   type: 'document',
   fields: [
     {
+      title: 'Page Title',
+      name: 'pageTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Page Subtitle',
+      name: 'pageSubtitle',
+      type: 'localizedString'
+    },
+    {
       title: 'Biography Title',
       name: 'bioTitle',
       type: 'localizedString'
@@ -25,6 +35,11 @@ export default {
       type: 'file'
     },
     {
+      title: 'CV Download Button Label',
+      name: 'cvButtonLabel',
+      type: 'localizedString'
+    },
+    {
       title: 'Quick Facts',
       name: 'quickFacts',
       type: 'object',
@@ -33,6 +48,11 @@ export default {
         { title: 'Specialization', name: 'specialization', type: 'localizedString' },
         { title: 'Languages', name: 'languages', type: 'localizedString' }
       ]
+    },
+    {
+      title: 'Academic & Professional Journey Section Title',
+      name: 'journeyTitle',
+      type: 'localizedString'
     },
     {
       title: 'Timeline / Experience',
