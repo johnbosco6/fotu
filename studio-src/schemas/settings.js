@@ -56,6 +56,25 @@ export default {
       ]
     },
     {
+      title: 'Footer Legal & Info Links',
+      name: 'footerLegalLinks',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { title: 'Label', name: 'label', type: 'localizedString' },
+            { title: 'URL Link', name: 'url', type: 'string' }
+          ]
+        }
+      ]
+    },
+    {
+      title: 'Footer Copyright Notice',
+      name: 'footerCopyright',
+      type: 'localizedString'
+    },
+    {
       title: 'Newsletter Section Title',
       name: 'newsletterTitle',
       type: 'localizedString'

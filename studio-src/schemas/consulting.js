@@ -14,24 +14,59 @@ export default {
       type: 'localizedString'
     },
     {
-      title: 'Academic Lecturing Description',
+      title: 'Intro Description',
+      name: 'introDescription',
+      type: 'localizedText'
+    },
+    {
+      title: 'Consulting Activities Section Title',
+      name: 'activitiesTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Academic Lecturing — Activity Title',
+      name: 'lecturingTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Academic Lecturing — Description',
       name: 'lecturingDesc',
       type: 'localizedText'
     },
     {
-      title: 'Research Consultation Description',
+      title: 'Research Consultation — Activity Title',
+      name: 'consultationTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Research Consultation — Description',
       name: 'consultationDesc',
       type: 'localizedText'
     },
     {
-      title: 'Policy Advisory Description',
+      title: 'Policy Advisory — Activity Title',
+      name: 'policyTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Policy Advisory — Description',
       name: 'policyDesc',
       type: 'localizedText'
     },
     {
-      title: 'Training Programs Description',
+      title: 'Training Programs — Activity Title',
+      name: 'trainingTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Training Programs — Description',
       name: 'trainingDesc',
       type: 'localizedText'
+    },
+    {
+      title: 'Previous Engagements Section Title',
+      name: 'engagementsSectionTitle',
+      type: 'localizedString'
     },
     {
       title: 'Previous Engagements',
@@ -47,6 +82,21 @@ export default {
           ]
         }
       ]
+    },
+    {
+      title: 'Request Collaboration Section Title',
+      name: 'bookingTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Request Collaboration Description',
+      name: 'bookingDescription',
+      type: 'localizedText'
+    },
+    {
+      title: 'Request Booking Button Label',
+      name: 'bookingButtonLabel',
+      type: 'localizedString'
     }
   ]
 }

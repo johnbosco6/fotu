@@ -28,6 +28,11 @@ export default {
       type: 'localizedText'
     },
     {
+      title: 'Card Button Label (e.g. "Detailed FGM Research", "Explore Research")',
+      name: 'buttonLabel',
+      type: 'localizedString'
+    },
+    {
       title: 'Banner Image',
       name: 'bannerImage',
       type: 'image',

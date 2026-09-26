@@ -2,6 +2,7 @@ import { localizedString, localizedText, localizedBlock } from './schemas/locali
 import homepage from './schemas/homepage.js';
 import about from './schemas/about.js';
 import researchArea from './schemas/researchArea.js';
+import researchPage from './schemas/researchPage.js';
 import publication from './schemas/publication.js';
 import blog from './schemas/blog.js';
 import event from './schemas/event.js';
@@ -18,6 +19,7 @@ export const schemaTypes = [
   localizedBlock,
   homepage,
   about,
+  researchPage,
   researchArea,
   publication,
   blog,

@@ -31,6 +31,15 @@ export default defineConfig({
                   .schemaType('aboutPage')
                   .documentId('aboutPage')
               ),
+            // Singleton: Research Overview Page
+            S.listItem()
+              .title('Research Overview Page')
+              .id('researchPage')
+              .child(
+                S.document()
+                  .schemaType('researchPage')
+                  .documentId('researchPage')
+              ),
             // Singleton: Consulting
             S.listItem()
               .title('Consulting Page')

@@ -220,6 +220,12 @@
   border-color: var(--color-primary-light);
 }
 
+@media (max-width: 768px) {
+  .activity-card {
+    padding: var(--space-5);
+  }
+}
+
 .activity-icon-container {
   color: var(--color-primary);
   margin-bottom: var(--space-4);
@@ -396,6 +402,10 @@
     text-align: center;
     padding: var(--space-6);
   }
+  .about-cv-card .btn {
+    width: 100%;
+    margin-top: var(--space-2);
+  }
 }
 
 .about-cv-icon {
@@ -469,5 +479,16 @@
   width: 24px;
   height: 24px;
   stroke-width: 2px;
+}
+
+@media (max-width: 768px) {
+  .card-image {
+    max-height: 240px;
+    object-fit: cover;
+    width: 100%;
+  }
+  .consulting-hero {
+    padding: var(--space-10) var(--space-4);
+  }
 }
 

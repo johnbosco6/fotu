@@ -10,26 +10,32 @@ const lang = isFrench ? 'fr' : 'en';
 
 // Helper to resolve Sanity Image asset references to CDN URLs
 function urlFor(source) {
-  if (!source || !source.asset || !source.asset._ref) return '';
+  if (!source || !source.asset) return '';
+  if (source.asset.url) return source.asset.url;
+  if (!source.asset._ref) return '';
   const ref = source.asset._ref;
   // Format: image-[id]-[dimensions]-[extension]
   const parts = ref.split('-');
   if (parts.length < 4) return '';
-  const id = parts[1];
-  const dimensions = parts[2];
-  const ext = parts[3];
+  const ext = parts.pop();
+  const dimensions = parts.pop();
+  parts.shift(); // remove 'image'
+  const id = parts.join('-');
   return `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${id}-${dimensions}.${ext}`;
 }
 
 // Helper to resolve Sanity File asset references to CDN URLs
 function fileUrlFor(source) {
-  if (!source || !source.asset || !source.asset._ref) return '';
+  if (!source || !source.asset) return '';
+  if (source.asset.url) return source.asset.url;
+  if (!source.asset._ref) return '';
   const ref = source.asset._ref;
   // Format: file-[id]-[extension]
   const parts = ref.split('-');
   if (parts.length < 3) return '';
-  const id = parts[1];
-  const ext = parts[2];
+  const ext = parts.pop();
+  parts.shift(); // remove 'file'
+  const id = parts.join('-');
   return `https://cdn.sanity.io/files/${SANITY_PROJECT_ID}/${SANITY_DATASET}/${id}.${ext}`;
 }
 
@@ -114,9 +120,10 @@ async function loadGlobalSettings() {
     if (footerBioEl) footerBioEl.textContent = settings.footerBio[lang];
   }
 
-  // Footer Nav Links
+  // Footer Navigation Links
+  const footerLists = document.querySelectorAll('.footer-grid .footer-links');
   if (settings.footerNavLinks && settings.footerNavLinks.length > 0) {
-    const footerNavUl = document.querySelector('.footer-grid > div:nth-child(2) .footer-links');
+    const footerNavUl = document.querySelector('ul[data-footer-col="nav"]') || footerLists[0];
     if (footerNavUl) {
       footerNavUl.innerHTML = settings.footerNavLinks.map(item => {
         const itemUrl = item.url || '#';
@@ -129,7 +136,7 @@ async function loadGlobalSettings() {
 
   // Footer Research Links
   if (settings.footerResearchLinks && settings.footerResearchLinks.length > 0) {
-    const footerResearchUl = document.querySelector('.footer-grid > div:nth-child(3) .footer-links');
+    const footerResearchUl = document.querySelector('ul[data-footer-col="research"]') || footerLists[1];
     if (footerResearchUl) {
       footerResearchUl.innerHTML = settings.footerResearchLinks.map(item => {
         const itemUrl = item.url || '#';
@@ -138,6 +145,25 @@ async function loadGlobalSettings() {
         return `<li><a href="${href}">${itemLabel}</a></li>`;
       }).join('');
     }
+  }
+
+  // Footer Legal Links
+  if (settings.footerLegalLinks && settings.footerLegalLinks.length > 0) {
+    const footerLegalUl = document.querySelector('ul[data-footer-col="legal"]') || footerLists[2];
+    if (footerLegalUl) {
+      footerLegalUl.innerHTML = settings.footerLegalLinks.map(item => {
+        const itemUrl = item.url || '#';
+        const itemLabel = item.label?.[lang] || '';
+        const href = isFrench ? (itemUrl.startsWith('fr/') ? itemUrl : `fr/${itemUrl}`) : itemUrl.replace(/^fr\//, '');
+        return `<li><a href="${href}">${itemLabel}</a></li>`;
+      }).join('');
+    }
+  }
+
+  // Footer Copyright Notice
+  if (settings.footerCopyright?.[lang]) {
+    const copyrightEl = document.querySelector('.footer-bottom p');
+    if (copyrightEl) copyrightEl.textContent = settings.footerCopyright[lang];
   }
 
   // Newsletter Title & Subtitle in Footer
@@ -290,7 +316,14 @@ async function loadAboutPage() {
 
   // CV File download & label
   if (cvLink) {
-    if (data.cvFile) cvLink.href = fileUrlFor(data.cvFile);
+    if (data.cvFile) {
+      const cvUrl = fileUrlFor(data.cvFile);
+      if (cvUrl) {
+        cvLink.href = cvUrl;
+        cvLink.setAttribute('download', '');
+        cvLink.setAttribute('target', '_blank');
+      }
+    }
     if (data.cvButtonLabel?.[lang]) cvLink.textContent = data.cvButtonLabel[lang];
   }
 
@@ -333,49 +366,98 @@ async function loadContactPage() {
   const pageSubtitle = document.querySelector('.page-subtitle');
   const connectTitle = document.querySelector('.reveal-right h2');
   const connectDesc = document.querySelector('.reveal-right p.mb-8');
+  const socialTitle = document.querySelector('.reveal-right h4.mb-4');
+  const contactForm = document.getElementById('contact-form');
 
   if (pageTitle && data.heroTitle?.[lang]) pageTitle.textContent = data.heroTitle[lang];
   if (pageSubtitle && data.heroSubtitle?.[lang]) pageSubtitle.textContent = data.heroSubtitle[lang];
   if (connectTitle && data.connectTitle?.[lang]) connectTitle.textContent = data.connectTitle[lang];
   if (connectDesc && data.connectDescription?.[lang]) connectDesc.textContent = data.connectDescription[lang];
+  if (socialTitle && data.socialTitle?.[lang]) socialTitle.textContent = data.socialTitle[lang];
+
+  if (contactForm) {
+    if (data.submitButtonLabel?.[lang]) {
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.textContent = data.submitButtonLabel[lang];
+    }
+    if (data.formTitle?.[lang]) {
+      let formTitleEl = contactForm.querySelector('.form-title');
+      if (!formTitleEl) {
+        formTitleEl = document.createElement('h3');
+        formTitleEl.className = 'form-title mb-4';
+        contactForm.prepend(formTitleEl);
+      }
+      formTitleEl.textContent = data.formTitle[lang];
+    }
+  }
+
+  // Service Dropdown Options
+  if (data.serviceOptions && data.serviceOptions.length > 0) {
+    const servicesSelect = document.getElementById('services');
+    if (servicesSelect) {
+      servicesSelect.innerHTML = `
+        <option value="">${isFrench ? '-- Sélectionnez une option --' : '-- Select an option --'}</option>
+        ${data.serviceOptions.map(opt => `<option value="${opt.value || ''}">${opt.label?.[lang] || opt.value || ''}</option>`).join('')}
+      `;
+    }
+  }
 }
 
 // Research Page & Subpages loader
 async function loadResearchPages() {
+  const isResearchOverview = window.location.pathname.endsWith('research.html') || window.location.pathname.endsWith('/fr/research.html');
   const isFgmPage = window.location.pathname.includes('research-fgm');
   const isFibroidsPage = window.location.pathname.includes('research-fibroids');
 
-  // Check if cards linking to research subpages are present in DOM
-  const cardLinks = document.querySelectorAll('a[href*="research-fgm"], a[href*="research-fibroids"]');
-  if (cardLinks.length > 0) {
-    const query = `*[_type == "researchArea"]`;
-    const areas = await fetchFromSanity(query);
-    if (areas && areas.length > 0) {
-      areas.forEach(area => {
-        const areaSlug = area.slug?.current || '';
-        const matches = document.querySelectorAll(`a[href*="${areaSlug}"]`);
-        matches.forEach(cardLink => {
-          const card = cardLink.closest('.card');
-          if (card) {
-            const title = card.querySelector('.card-title');
-            const desc = card.querySelector('.card-text');
-            const badge = card.querySelector('.badge');
-            const img = card.querySelector('.card-image');
+  // If on research overview page, load researchPage document
+  if (isResearchOverview) {
+    const researchPageQuery = `*[_type == "researchPage"][0]`;
+    const rpData = await fetchFromSanity(researchPageQuery);
+    if (rpData) {
+      const pageTitle = document.querySelector('.page-title');
+      const pageSubtitle = document.querySelector('.page-subtitle');
+      const overviewP = document.querySelector('.section.pt-0 p');
+      const sectionTitle = document.querySelector('.section-bg-alt h2');
 
-            if (title && area.title?.[lang]) title.textContent = area.title[lang];
-            if (badge && area.badge?.[lang]) badge.textContent = area.badge[lang];
-            if (desc && area.shortDescription?.[lang]) desc.textContent = area.shortDescription[lang];
-            if (img && area.bannerImage) img.src = urlFor(area.bannerImage);
-          }
-        });
-      });
+      if (pageTitle && rpData.pageTitle?.[lang]) pageTitle.textContent = rpData.pageTitle[lang];
+      if (pageSubtitle && rpData.pageSubtitle?.[lang]) pageSubtitle.textContent = rpData.pageSubtitle[lang];
+      if (overviewP && rpData.overviewText?.[lang]) overviewP.textContent = rpData.overviewText[lang];
+      if (sectionTitle && rpData.sectionTitle?.[lang]) sectionTitle.textContent = rpData.sectionTitle[lang];
     }
   }
 
+  // Update research cards across overview page and homepage
+  const query = `*[_type == "researchArea"]`;
+  const areas = await fetchFromSanity(query);
+  if (areas && areas.length > 0) {
+    areas.forEach(area => {
+      const areaSlug = area.slug?.current || '';
+      // Find all links referencing this area's slug
+      const matches = document.querySelectorAll(`a[href*="${areaSlug}"]`);
+      matches.forEach(cardLink => {
+        const card = cardLink.closest('.card');
+        if (card) {
+          const title = card.querySelector('.card-title');
+          const desc = card.querySelector('.card-text');
+          const badge = card.querySelector('.badge');
+          const img = card.querySelector('.card-image');
+          const btn = card.querySelector('.btn');
+
+          if (title && area.title?.[lang]) title.textContent = area.title[lang];
+          if (badge && area.badge?.[lang]) badge.textContent = area.badge[lang];
+          if (desc && area.shortDescription?.[lang]) desc.textContent = area.shortDescription[lang];
+          if (img && area.bannerImage) img.src = urlFor(area.bannerImage);
+          if (btn && area.buttonLabel?.[lang]) btn.textContent = area.buttonLabel[lang];
+        }
+      });
+    });
+  }
+
+  // Individual detail pages
   if (isFgmPage || isFibroidsPage) {
     const slug = isFgmPage ? 'fgm' : 'fibroids';
-    const query = `*[_type == "researchArea" && slug.current match "*${slug}*"][0]`;
-    const data = await fetchFromSanity(query);
+    const queryArea = `*[_type == "researchArea" && slug.current match "*${slug}*"][0]`;
+    const data = await fetchFromSanity(queryArea);
     if (!data) return;
 
     const titleEl = document.querySelector('.page-title');
@@ -564,31 +646,59 @@ async function loadConsultingPage() {
 
   const pageTitle = document.querySelector('.page-title');
   const pageSubtitle = document.querySelector('.page-subtitle');
+  const introDesc = document.querySelector('.consulting-hero + .section .text-center p');
+  const activitiesTitle = document.querySelector('.section h2.text-center');
   
   if (pageTitle && data.heroTitle?.[lang]) pageTitle.textContent = data.heroTitle[lang];
   if (pageSubtitle && data.heroSubtitle?.[lang]) pageSubtitle.textContent = data.heroSubtitle[lang];
+  if (introDesc && data.introDescription?.[lang]) introDesc.textContent = data.introDescription[lang];
+  if (activitiesTitle && data.activitiesTitle?.[lang]) activitiesTitle.textContent = data.activitiesTitle[lang];
 
-  // Activities detail mapping
-  const serviceCards = document.querySelectorAll('.grid .card');
-  if (serviceCards.length >= 4) {
-    if (data.lecturingDesc?.[lang]) serviceCards[0].querySelector('p').textContent = data.lecturingDesc[lang];
-    if (data.consultationDesc?.[lang]) serviceCards[1].querySelector('p').textContent = data.consultationDesc[lang];
-    if (data.policyDesc?.[lang]) serviceCards[2].querySelector('p').textContent = data.policyDesc[lang];
-    if (data.trainingDesc?.[lang]) serviceCards[3].querySelector('p').textContent = data.trainingDesc[lang];
+  // Activities detail mapping (using .activity-card)
+  const activityCards = document.querySelectorAll('.activity-card');
+  if (activityCards.length >= 4) {
+    if (data.lecturingTitle?.[lang]) activityCards[0].querySelector('h3').textContent = data.lecturingTitle[lang];
+    if (data.lecturingDesc?.[lang]) activityCards[0].querySelector('p').textContent = data.lecturingDesc[lang];
+
+    if (data.consultationTitle?.[lang]) activityCards[1].querySelector('h3').textContent = data.consultationTitle[lang];
+    if (data.consultationDesc?.[lang]) activityCards[1].querySelector('p').textContent = data.consultationDesc[lang];
+
+    if (data.policyTitle?.[lang]) activityCards[2].querySelector('h3').textContent = data.policyTitle[lang];
+    if (data.policyDesc?.[lang]) activityCards[2].querySelector('p').textContent = data.policyDesc[lang];
+
+    if (data.trainingTitle?.[lang]) activityCards[3].querySelector('h3').textContent = data.trainingTitle[lang];
+    if (data.trainingDesc?.[lang]) activityCards[3].querySelector('p').textContent = data.trainingDesc[lang];
   }
 
-  // Previous Engagements timeline
-  if (data.engagements && data.engagements.length > 0) {
-    const engagementsTimeline = document.querySelector('.timeline');
-    if (engagementsTimeline) {
-      engagementsTimeline.innerHTML = data.engagements.map(eng => `
-        <div class="timeline-item">
-          <div class="timeline-date">${eng.date || ''}</div>
-          <h4>${eng.role?.[lang] || ''}</h4>
-          <p>${eng.institution?.[lang] || ''}</p>
-        </div>
-      `).join('');
-    }
+  // Previous Engagements section header & timeline
+  const engagementsList = document.getElementById('engagements-list');
+  if (data.engagementsSectionTitle?.[lang]) {
+    const engagementsHeading = engagementsList?.closest('.card')?.parentElement?.querySelector('h2');
+    if (engagementsHeading) engagementsHeading.textContent = data.engagementsSectionTitle[lang];
+  }
+
+  if (engagementsList && data.engagements && data.engagements.length > 0) {
+    engagementsList.innerHTML = data.engagements.map(eng => `
+      <li class="engagement-item">
+        <span class="engagement-org">${eng.institution?.[lang] || ''}</span>
+        <span class="engagement-role">${eng.role?.[lang] || ''}</span>
+        <span class="engagement-year">${eng.date || ''}</span>
+      </li>
+    `).join('');
+  }
+
+  // Booking / Collaboration Card
+  if (data.bookingTitle?.[lang]) {
+    const bookingHeading = document.querySelector('.reveal-right .card h3');
+    if (bookingHeading) bookingHeading.textContent = data.bookingTitle[lang];
+  }
+  if (data.bookingDescription?.[lang]) {
+    const bookingDesc = document.querySelector('.reveal-right .card p.text-muted');
+    if (bookingDesc) bookingDesc.textContent = data.bookingDescription[lang];
+  }
+  if (data.bookingButtonLabel?.[lang]) {
+    const bookingBtn = document.querySelector('.reveal-right .card a.btn-primary');
+    if (bookingBtn) bookingBtn.textContent = data.bookingButtonLabel[lang];
   }
 }
 
