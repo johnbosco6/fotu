@@ -43,6 +43,41 @@ export default {
       title: 'Events Section Title',
       name: 'eventsTitle',
       type: 'localizedString'
+    },
+    {
+      title: 'Introduction Button Label',
+      name: 'introButtonLabel',
+      type: 'localizedString'
+    },
+    {
+      title: 'Publications Button Label',
+      name: 'publicationsButtonLabel',
+      type: 'localizedString'
+    },
+    {
+      title: 'Events Button Label',
+      name: 'eventsButtonLabel',
+      type: 'localizedString'
+    },
+    {
+      title: 'Contact Section Title',
+      name: 'contactTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Contact Section Description',
+      name: 'contactDescription',
+      type: 'localizedText'
+    },
+    {
+      title: 'Email Inquiry Title',
+      name: 'emailInquiryTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Affiliations Title',
+      name: 'affiliationsTitle',
+      type: 'localizedString'
     }
   ]
 }

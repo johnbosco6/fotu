@@ -175,6 +175,24 @@ async function loadGlobalSettings() {
     const newsSubEl = document.querySelector('.site-footer p.text-center.text-muted');
     if (newsSubEl) newsSubEl.textContent = settings.newsletterSubtitle[lang];
   }
+  if (settings.newsletterButtonLabel?.[lang]) {
+    const newsBtnEl = document.querySelector('#newsletter-form .btn');
+    if (newsBtnEl) newsBtnEl.textContent = settings.newsletterButtonLabel[lang];
+  }
+
+  // Footer Column Titles
+  if (settings.footerNavTitle?.[lang]) {
+    const el = document.querySelector('ul[data-footer-col="nav"]')?.previousElementSibling;
+    if (el) el.textContent = settings.footerNavTitle[lang];
+  }
+  if (settings.footerResearchTitle?.[lang]) {
+    const el = document.querySelector('ul[data-footer-col="research"]')?.previousElementSibling;
+    if (el) el.textContent = settings.footerResearchTitle[lang];
+  }
+  if (settings.footerLegalTitle?.[lang]) {
+    const el = document.querySelector('ul[data-footer-col="legal"]')?.previousElementSibling;
+    if (el) el.textContent = settings.footerLegalTitle[lang];
+  }
 
   // Social Links
   const linkedinElems = document.querySelectorAll('a[href*="linkedin.com"], a[aria-label="LinkedIn"], a[aria-label="Linkedin"]');
@@ -225,14 +243,37 @@ async function loadHomepage() {
   const heroImage = document.querySelector('.profile-img');
   const introTitle = document.querySelector('.section h2');
   const introDesc = document.querySelector('.section p[style*="max-width"]');
+  const introBtn = document.querySelector('.section .btn-primary');
   const researchSectionTitle = document.querySelector('.section:nth-of-type(2) h2');
+  const pubSectionBtn = document.querySelector('#home-publications-list + .btn');
+  const eventSectionBtn = document.querySelector('#home-events-list + .btn');
+  
+  const contactTitle = document.querySelector('.reveal-left h2');
+  const contactDesc = document.querySelector('.reveal-left p.mb-6');
+  const emailTitle = document.querySelector('.reveal-left .mb-4 h4');
+  const affilTitle = document.querySelector('.reveal-left div:last-child h4');
 
   if (heroTitle && data.heroTitle?.[lang]) heroTitle.textContent = data.heroTitle[lang];
   if (heroSubtitle && data.heroSubtitle?.[lang]) heroSubtitle.textContent = data.heroSubtitle[lang];
   if (heroImage && data.profileImage) heroImage.src = urlFor(data.profileImage);
   if (introTitle && data.introTitle?.[lang]) introTitle.textContent = data.introTitle[lang];
-  if (introDesc && data.introDescription?.[lang]) introDesc.textContent = data.introDescription[lang];
+  
+  if (introDesc && data.introDescription?.[lang]) {
+    introDesc.innerHTML = portableTextToHTML(data.introDescription[lang]).replace(/<p>|<\/p>/g, '');
+  }
+  
+  if (introBtn && data.introButtonLabel?.[lang]) introBtn.textContent = data.introButtonLabel[lang];
   if (researchSectionTitle && data.researchTitle?.[lang]) researchSectionTitle.textContent = data.researchTitle[lang];
+  
+  if (pubSectionBtn && data.publicationsButtonLabel?.[lang]) pubSectionBtn.textContent = data.publicationsButtonLabel[lang];
+  if (eventSectionBtn && data.eventsButtonLabel?.[lang]) eventSectionBtn.textContent = data.eventsButtonLabel[lang];
+  
+  if (contactTitle && data.contactTitle?.[lang]) contactTitle.textContent = data.contactTitle[lang];
+  if (contactDesc && data.contactDescription?.[lang]) {
+    contactDesc.innerHTML = portableTextToHTML(data.contactDescription[lang]).replace(/<p>|<\/p>/g, '');
+  }
+  if (emailTitle && data.emailInquiryTitle?.[lang]) emailTitle.textContent = data.emailInquiryTitle[lang];
+  if (affilTitle && data.affiliationsTitle?.[lang]) affilTitle.textContent = data.affiliationsTitle[lang];
 
   // Load latest publications on homepage
   const homePubList = document.getElementById('home-publications-list');
@@ -329,12 +370,29 @@ async function loadAboutPage() {
 
   // Quick Facts
   if (data.quickFacts) {
+    const posLabel = document.querySelector('#fact-position')?.previousElementSibling;
+    const specLabel = document.querySelector('#fact-specialization')?.previousElementSibling;
+    const langLabel = document.querySelector('#fact-languages')?.previousElementSibling;
     const posEl = document.getElementById('fact-position');
     const specEl = document.getElementById('fact-specialization');
     const langEl = document.getElementById('fact-languages');
+    
+    if (posLabel && data.quickFacts.positionLabel?.[lang]) posLabel.textContent = data.quickFacts.positionLabel[lang];
+    if (specLabel && data.quickFacts.specializationLabel?.[lang]) specLabel.textContent = data.quickFacts.specializationLabel[lang];
+    if (langLabel && data.quickFacts.languagesLabel?.[lang]) langLabel.textContent = data.quickFacts.languagesLabel[lang];
+    
     if (posEl && data.quickFacts.position?.[lang]) posEl.textContent = data.quickFacts.position[lang];
     if (specEl && data.quickFacts.specialization?.[lang]) specEl.textContent = data.quickFacts.specialization[lang];
     if (langEl && data.quickFacts.languages?.[lang]) langEl.textContent = data.quickFacts.languages[lang];
+  }
+
+  // CV File Title & Description
+  if (cvLink) {
+    const cvInfoDiv = document.querySelector('.about-cv-info');
+    if (cvInfoDiv) {
+      if (data.cvTitle?.[lang]) cvInfoDiv.querySelector('h4').textContent = data.cvTitle[lang];
+      if (data.cvDescription?.[lang]) cvInfoDiv.querySelector('p').textContent = data.cvDescription[lang];
+    }
   }
 
   // Timeline

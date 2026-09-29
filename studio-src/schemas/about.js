@@ -44,10 +44,23 @@ export default {
       name: 'quickFacts',
       type: 'object',
       fields: [
+        { title: 'Position Label', name: 'positionLabel', type: 'localizedString' },
         { title: 'Position', name: 'position', type: 'localizedString' },
+        { title: 'Specialization Label', name: 'specializationLabel', type: 'localizedString' },
         { title: 'Specialization', name: 'specialization', type: 'localizedString' },
+        { title: 'Languages Label', name: 'languagesLabel', type: 'localizedString' },
         { title: 'Languages', name: 'languages', type: 'localizedString' }
       ]
+    },
+    {
+      title: 'CV Section Title',
+      name: 'cvTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'CV Section Description',
+      name: 'cvDescription',
+      type: 'localizedText'
     },
     {
       title: 'Academic & Professional Journey Section Title',

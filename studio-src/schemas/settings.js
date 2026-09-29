@@ -123,6 +123,26 @@ export default {
           ]
         }
       ]
+    },
+    {
+      title: 'Footer Navigation Column Title',
+      name: 'footerNavTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Footer Research Column Title',
+      name: 'footerResearchTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Footer Legal Column Title',
+      name: 'footerLegalTitle',
+      type: 'localizedString'
+    },
+    {
+      title: 'Newsletter Button Label',
+      name: 'newsletterButtonLabel',
+      type: 'localizedString'
     }
   ]
 }
